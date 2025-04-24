@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class UeHomeController extends AbstractController
 {
-    #[Route('/ue/home', name: 'ue_home')]
+    #[Route('/ue/home_page', name: 'ue_home')]
     public function index(): Response
     {
         return $this->render('ue_home/index.html.twig', [
