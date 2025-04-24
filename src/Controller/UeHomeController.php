@@ -12,7 +12,10 @@ final class UeHomeController extends AbstractController
     public function index(): Response
     {
         return $this->render('ue_home/index.html.twig', [
-            'controller_name' => 'UeHomeController',
+            'styles' => ['ue_home_style'],
+            'header' => 'PageParts/header.html.twig',
+            'footer' => 'PageParts/footer.html.twig',
+            'currentPage' => 'ue_home',
         ]);
     }
 }
