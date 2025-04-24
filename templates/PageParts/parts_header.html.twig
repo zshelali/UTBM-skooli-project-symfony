@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Main layout style -->
+    <link rel="stylesheet" href="{{ asset('style/main_style.css') }}" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css" />
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
+    {% if styles is defined and styles is iterable %}
+        {% for style in styles %}
+            <link rel="stylesheet" href="{{ asset('style/' ~ style ~ '.css') }}">
+        {% endfor %}
+    {% endif %}
+
+    {% if scripts is defined and scripts is iterable %}
+        {% for script in scripts %}
+            <script src="{{ asset('script/' ~ script ~ '.js') }}"></script>
+        {% endfor %}
+    {% endif %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
+    <title>Skooli</title>
+</head>
+
+<body>

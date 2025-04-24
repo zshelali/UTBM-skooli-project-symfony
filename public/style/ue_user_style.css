@@ -1,0 +1,44 @@
+.multiselect-container {
+  position: relative;
+  width: 300px;
+  font-family: sans-serif;
+}
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  padding: 5px;
+  min-height: 40px;
+  cursor: pointer;
+}
+.tag {
+  background-color: #e0e0f8;
+  color: #333;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin: 3px;
+  display: flex;
+  align-items: center;
+}
+.tag .remove {
+  margin-left: 5px;
+  cursor: pointer;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  border: 1px solid #ccc;
+  background: white;
+  z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.dropdown div {
+  padding: 8px;
+  cursor: pointer;
+}
+.dropdown div:hover {
+  background-color: #f0f0f0;
+}

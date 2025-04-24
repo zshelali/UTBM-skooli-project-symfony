@@ -1,0 +1,138 @@
+.ueGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto auto;
+  grid-column-gap: 60px;
+  grid-row-gap: 10px;
+
+  margin-top: 100px;
+  margin-bottom: 20px;
+}
+
+.ueGridBox1 {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.ueGridBox2 {
+  grid-area: 1 / 3 / 2 / 4;
+}
+.ueGridBox3 {
+  grid-area: 1 / 4 / 2 / 5;
+}
+.ueGridBox4 {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.ueGridBox5 {
+  grid-area: 2 / 3 / 3 / 4;
+}
+.ueGridBox6 {
+  grid-area: 2 / 4 / 3 / 5;
+}
+
+.ueBox:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.ueBox img {
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  object-fit: scale-down;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  align-self: center;
+  margin-top: 7px;
+}
+
+.ueBox a {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ueBox a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.ueBox h4 {
+  align-self: flex-start;
+  margin: 0;
+  font-size: 18px;
+}
+
+.subtitle {
+  position: absolute;
+  top: 10vh;
+  left: 20vw;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.ueBox {
+  border: 2px solid #ccc;
+  width: 30vh;
+  height: 30vh;
+  padding: 10%;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+  gap: 10px;
+
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.separator {
+  width: 5px;
+  background: #333;
+  height: auto;
+  position: relative;
+  align-self: stretch;
+  margin-left: 20px;
+}
+
+.recent-posts {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 15px;
+  border-left: 2px solid #ccc;
+}
+
+.recent-posts-header {
+  margin-bottom: 20px;
+}
+
+#posts-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid #ddd;
+}

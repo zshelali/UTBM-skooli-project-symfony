@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Common styles -->
+    <link rel="stylesheet" href="{{ asset('style/main_style.css') }}" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
+    {% if styles is defined and styles is iterable %}
+        {% for style in styles %}
+            <link rel="stylesheet" href="{{ asset('style/' ~ style ~ '.css') }}" />
+        {% endfor %}
+    {% endif %}
+
+    {% if scripts is defined and scripts is iterable %}
+        {% for script in scripts %}
+            <script src="{{ asset('script/' ~ script ~ '.js') }}"></script>
+        {% endfor %}
+    {% endif %}
+
+    {% if currentPage is defined and currentPage != 'index.php' %}
+        <a href="javascript:history.back()" class="back-button buttonlink">← Back</a>
+    {% endif %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
+    <title>Skooli</title>
+</head>
+
+<body>
+<div class="title-container">
+    <h1>
+        <a href="{{ path('home_page') }}" id="maintitle" class="link-hover">Skooli<span class="dotcom">.com</span></a>
+    </h1>
+    <div class="logo-container">
+        <a href="https://utbm.fr">
+            <img src="https://upload.wikimedia.org/wikipedia/fr/b/be/Utbm.svg" alt="logo" id="utbm-logo">
+        </a>
+    </div>
+</div>
+<br />
+<nav id="reg-log-nav">
+    <a href="{{ path('login_page') }}" class="buttonlink">Sign in</a>
+    <a href="{{ path('admin_home') }}" class="buttonlink">Admin zone</a>
+</nav>
+<br />

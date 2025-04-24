@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  outline-style: none;
+}
+
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #423E3E;
+  flex: 1;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none; /* remove underline */
+  color: #D42D26; /* use of default color */
+  transition: color 0.3s ease;
+}
+
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+}
+
+.description {
+  text-align: center;
+  display: block;
+  margin-top: 25px;
+  min-height: 200px;
+  width: 180px;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  background: #f3f2f2;
+  height: 80px;
+  padding-top: 20px;
+  overflow: visible;
+  border-radius: 7px;
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.dotcom {
+  font-size: 12px;
+}
+
+.buttonlink {
+  color: #423E3E;
+  background-color: #f3f3f3;
+  border-radius: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  text-align: center;
+
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.buttonlink:hover {
+  background-color: #d5302a;
+  color: white;
+}
+
+.link-hover {
+  color: #423E3E;
+  transition: color 0.2s ease;
+}
+
+.link-hover:hover {
+  color: #d5302a;
+}
+
+.subtitle {
+  text-align: center;
+  margin-top: 100px;
+  margin-right: 500px;
+  font-size: 30px;
+}
+
+#maintitle {
+  font-size: 50px;
+  position: absolute;
+  left: 20px;
+  transform: translateY(-50%);
+
+}
+
+#utbm-logo {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  width: 100px;
+  transition: transform 0.2s ease;
+}
+
+#utbm-logo:hover {
+  transform: scale(1.1);
+}
+
+
+.back-button {
+  width: 80px;
+  position: absolute;
+  top:120px;
+  left: 20px;
+}
+
+footer {
+  font-size: x-small;
+  text-align: center;
+  display: none;
+
+}
