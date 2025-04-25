@@ -42,7 +42,7 @@ class UEController extends AbstractController
         $entityManager->persist($ue);
         $entityManager->flush();
 
-        $this->addFlash('success', 'UE ajoutée avec succès !');
+        $this->addFlash('success', 'UE successfully added!');
         return $this->redirectToRoute('admin_home');
     }
 

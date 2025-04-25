@@ -14,6 +14,7 @@
 
     <table id="ueTable">
         <tr>
+            <th>ID</th>
             <th>UE Code</th>
             <th>UE Name</th>
             <th>UE Description</th>
@@ -23,6 +24,7 @@
         </tr>
         {% for ue in ues %}
             <tr>
+                <td>{{ ue.id }}</td>
                 <td>{{ ue.code }}</td>  <!-- Affichage du code de l'UE -->
                 <td>{{ ue.name }}</td>
                 <td>{{ ue.description }}</td>

@@ -23,6 +23,7 @@ security:
 #                default_target_path: home_page
             logout:
                 path: app_logout
+                target: home_page
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -36,9 +37,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/ue/home_page, roles: ROLE_STUDENT }
-         - { path: ^/ue/home_page, roles: ROLE_PROFESSOR }
-
+         - { path: ^/ue/home_page, roles: [ROLE_STUDENT, ROLE_PROFESSOR, ROLE_PROFADMIN] }
 when@test:
     security:
         password_hashers:

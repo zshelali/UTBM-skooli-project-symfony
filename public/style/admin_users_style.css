@@ -1,4 +1,4 @@
-.pfp {
+.user-pfp {
   width: 64px;
   height: 64px;
 }
@@ -147,6 +147,7 @@ textarea:focus {
 }
 
 .user-list-container {
+  overflow-y: auto;
   margin: 0 auto;
   margin-top: 3vh;
   padding: 1em;
@@ -173,6 +174,10 @@ textarea:focus {
 
 .user-list-container td {
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30vh;
 }
 
 .user-list-container th {

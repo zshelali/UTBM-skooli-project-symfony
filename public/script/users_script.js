@@ -30,41 +30,46 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = btn.closest("tr");
       const cells = row.querySelectorAll("td");
 
+      const roleName = cells[1].textContent.trim().toLowerCase();
+
+      userTab.querySelectorAll("input[name='role']").forEach((radio) => {
+        radio.checked = radio.id === `role-${roleName}`;
+      });
       document.getElementById("user-first-name").value = cells[2].textContent.trim();
       document.getElementById("user-last-name").value = cells[3].textContent.trim();
       document.getElementById("user-email").value = cells[4].textContent.trim();
       document.getElementById("user-password").value = cells[5].textContent.trim();
 
-      // --- reset and extract role ---
-      roles = [];
-      roleString = "";
-      counter = 0;
-      const roleText = cells[1].textContent.trim();
-
-      for (const char of roleText) {
-        roleString += char;
-        counter++;
-        if (char === ',' || counter === roleText.length) {
-          roles.push(roleString.replace(',', '').trim());
-          roleString = "";
-        }
-      }
-
-      for (const role of roles) {
-        switch (role) {
-          case "Professor":
-            userTab.querySelector("#select-role-prof").checked = true;
-            break;
-          case "Student":
-            userTab.querySelector("#select-role-student").checked = true;
-            break;
-          case "Admin":
-            userTab.querySelector("#is-admin").checked = true;
-            break;
-          default:
-            console.log("No role could be read.");
-        }
-      }
+      // // --- reset and extract role ---
+      // roles = [];
+      // roleString = "";
+      // counter = 0;
+      // const roleText = cells[1].textContent.trim();
+      //
+      // for (const char of roleText) {
+      //   roleString += char;
+      //   counter++;
+      //   if (char === ',' || counter === roleText.length) {
+      //     roles.push(roleString.replace(',', '').trim());
+      //     roleString = "";
+      //   }
+      // }
+      //
+      // for (const role of roles) {
+      //   switch (role) {
+      //     case "Professor":
+      //       userTab.querySelector("#select-role-prof").checked = true;
+      //       break;
+      //     case "Student":
+      //       userTab.querySelector("#select-role-student").checked = true;
+      //       break;
+      //     case "Admin":
+      //       userTab.querySelector("#is-admin").checked = true;
+      //       break;
+      //     default:
+      //       console.log("No role could be read.");
+      //   }
+      // }
 
       userTab.querySelector("#user-modal-title").textContent = "Edit user";
       userTab.querySelector("#user-modal-submit").textContent = "Confirm update";
