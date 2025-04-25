@@ -3,16 +3,6 @@
     <div class="form-container">
         <h3 class="subtitle">Welcome back.</h3>
 
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
-
         <form class="reg-log-form" action="{{ path('app_login') }}" method="post">
             <label for="username">Email :</label>
             <input id="username" name="_username" type="email" value="{{ last_username }}" required autofocus />
@@ -26,6 +16,11 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
             <button type="submit" class="buttonlink submit-reg">Sign in</button>
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
         </form>
     </div>
 
