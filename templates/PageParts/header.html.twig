@@ -45,16 +45,15 @@
 </div>
 <br />
 <nav id="reg-log-nav">
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_home') }}" class="buttonlink nav-button">Admin zone</a>
+    {% endif %}
     {% if app.user %}
         <form action="{{ path('app_logout') }}" method="post">
             <button type="submit" class="buttonlink nav-button">Logout</button>
         </form>
     {% else %}
-        <a href="{{ path('app_login') }}" class="buttonlink">Sign in</a>
-    {% endif %}
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_home') }}" class="buttonlink">Admin zone</a>
+        <a href="{{ path('app_login') }}" class="buttonlink nav-button">Sign in</a>
     {% endif %}
 </nav>
 <br />
