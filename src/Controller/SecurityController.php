@@ -21,6 +21,11 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'styles' => ['register_login_style'],
+            'scripts' => ['login_script'],
+            'header' => 'PageParts/header.html.twig',
+            'footer' => 'PageParts/footer.html.twig',
+            'currentPage' => 'app_login',
         ]);
     }
 

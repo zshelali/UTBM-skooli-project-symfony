@@ -353,10 +353,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        if ($this->id_role) {
+        if (!$this->id_role) {
             return ['ROLE_USER'];
         }
-        return[$this->id_role->getName()];
+        return [strtoupper('ROLE_' . $this->id_role->getName())];
     }
 
     public function eraseCredentials(): void

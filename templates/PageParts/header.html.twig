@@ -45,7 +45,16 @@
 </div>
 <br />
 <nav id="reg-log-nav">
-    <a href="{{ path('login_page') }}" class="buttonlink">Sign in</a>
-    <a href="{{ path('admin_home') }}" class="buttonlink">Admin zone</a>
+    {% if app.user %}
+        <form action="{{ path('app_logout') }}" method="post">
+            <button type="submit" class="buttonlink nav-button">Logout</button>
+        </form>
+    {% else %}
+        <a href="{{ path('app_login') }}" class="buttonlink">Sign in</a>
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_home') }}" class="buttonlink">Admin zone</a>
+    {% endif %}
 </nav>
 <br />
