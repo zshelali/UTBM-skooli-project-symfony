@@ -4,18 +4,18 @@ function deleteUERow(){
 
 document.addEventListener("DOMContentLoaded", () => {
   const ueTab = document.querySelector(".ue-tab");
-  if (!ueTab) return; // Ensure this script only runs in the UE tab
+  if (!ueTab) return; // Assurer que ce script fonctionne uniquement dans l'onglet UE
 
-  const modal = ueTab.querySelector("#ueEditModal"); // Updated to match the correct ID
+  const modal = ueTab.querySelector("#ueEditModal"); // Mise à jour avec le bon ID
   const closeBtn = modal.querySelector(".close");
   const settingsButtons = ueTab.querySelectorAll(".edit-btn");
   const rows = ueTab.querySelectorAll(".ue-list-container table tr");
 
   settingsButtons.forEach((btn, i) => {
     btn.addEventListener("click", () => {
-      const row = rows[i + 1]; // skip header
+      const row = rows[i + 1]; // Ignorer l'en-tête
       const cells = row.querySelectorAll("td");
-      ueTab.querySelector("#ue-code").value = cells[0].textContent;
+      ueTab.querySelector("#ue-code").value = cells[0].textContent;  // Pré-remplir le code
       ueTab.querySelector("#ue-name").value = cells[1].textContent;
       ueTab.querySelector("#ue-description").value = cells[2].textContent;
       ueTab.querySelector("#ue-credits").value = cells[3].textContent;
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = ueTab.querySelector(".add-btn");
   if (addBtn) {
     addBtn.addEventListener("click", () => {
-      ueTab.querySelector("#ue-code").value = '';
+      ueTab.querySelector("#ue-code").value = '';  // Réinitialiser le code pour un nouvel ajout
       ueTab.querySelector("#ue-name").value = '';
       ueTab.querySelector("#ue-description").value = '';
       ueTab.querySelector("#ue-modal-title").textContent = "New UE";
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Search bar
+  // Barre de recherche
   const ueSearchInput = ueTab.querySelector("#ueSearchInput");
   if (ueSearchInput) {
     ueSearchInput.addEventListener("keyup", function () {

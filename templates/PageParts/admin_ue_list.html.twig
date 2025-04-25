@@ -1,4 +1,3 @@
-
 {% set styles = ['admin_ue_style'] %}
 {% set scripts = ['ue_script'] %}
 {% include 'PageParts/parts_header.html.twig' %}
@@ -22,46 +21,29 @@
             <th>Illustration</th>
             <th> </th>
         </tr>
-        <tr>
-            <td>WE4A</td>
-            <td>Technologies et programmation WEB</td>
-            <td>Maîtriser les technologies Web permettant de créer des sites Web modernes</td>
-            <td>3</td>
-            <td><img class="ue-list-img" src="{{ asset('images/we4a_gpt.png') }}" alt="illustration1"></td>
-            <td>
-                <div class="man-del-btn-container">
-                    <button class="buttonlink edit-btn"><img src="{{ asset('images/edit.png') }}" alt="edit" class="edit-img"></button>
-                    <button onclick="deleteUERow()" class="buttonlink del-btn"><img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img"></button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>IT41</td>
-            <td>Classical and Quantum Algorithms</td>
-            <td>Aborder du point de vue des mathématiques la notion d'algorithme en étudiant/comparant le calcul classique et le calcul quantique.</td>
-            <td>6</td>
-            <td><img class="ue-list-img" src="{{ asset('images/it41_gpt.png') }}" alt="illustration2"></td>
-            <td>
-                <div class="man-del-btn-container">
-                    <button class="buttonlink edit-btn"><img src="{{ asset('images/edit.png') }}" alt="edit" class="edit-img"></button>
-                    <button onclick="deleteUERow()" class="buttonlink del-btn"><img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img"></button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>SI40</td>
-            <td>Systèmes d'information</td>
-            <td>Mettre en œuvre des outils de conception de systèmes d’information permettant la mise en application des méthodes associées</td>
-            <td>6</td>
-            <td><img class="ue-list-img" src="{{ asset('images/si40_gpt.png') }}" alt="illustration3"></td>
-            <td>
-                <div class="man-del-btn-container">
-                    <button class="buttonlink edit-btn"><img src="{{ asset('images/edit.png') }}" alt="edit" class="edit-img"></button>
-                    <button onclick="deleteUERow()" class="buttonlink del-btn"><img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img"></button>
-                </div>
-            </td>
-        </tr>
+        {% for ue in ues %}
+            <tr>
+                <td>{{ ue.code }}</td>  <!-- Affichage du code de l'UE -->
+                <td>{{ ue.name }}</td>
+                <td>{{ ue.description }}</td>
+                <td>{{ ue.credits }}</td>
+                <td>
+                    {% if ue.illustration %}
+                        <img class="ue-list-img" src="{{ asset('uploads/ue_images/' ~ ue.illustration) }}" alt="illustration">
+                    {% else %}
+                        No image
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="man-del-btn-container">
+                        <button class="buttonlink edit-btn"><img src="{{ asset('images/edit.png') }}" alt="edit" class="edit-img"></button>
+                        <button onclick="deleteUERow()" class="buttonlink del-btn"><img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img"></button>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
     </table>
+
 </div>
 
 <div id="ueEditModal" class="modal">
@@ -69,7 +51,7 @@
         <span class="close">&times;</span>
         <h3 id="ue-modal-title">UE settings</h3>
         <div class="form-container">
-            <form class="reg-log-form" action="" method="POST">
+            <form class="reg-log-form" action="{{ path('add_ue') }}" method="POST" enctype="multipart/form-data">
                 <label for="ue-code">UE Code</label>
                 <input type="text" id="ue-code" name="ue_code" required>
 

@@ -31,6 +31,9 @@ class UE
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $last_update_date = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;  // Ajout de la colonne 'code'
+
     /**
      * @var Collection<int, Course>
      */
@@ -75,6 +78,18 @@ class UE
         return $this;
     }
 
+    public function getCode(): ?string  // Getter pour 'code'
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): static  // Setter pour 'code'
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -86,6 +101,7 @@ class UE
 
         return $this;
     }
+
 
     public function getDescription(): ?string
     {
