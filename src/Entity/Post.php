@@ -35,6 +35,10 @@ class Post
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'id_post')]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?UE $id_ue = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -126,6 +130,18 @@ class Post
                 $comment->setIdPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdUe(): ?UE
+    {
+        return $this->id_ue;
+    }
+
+    public function setIdUe(?UE $id_ue): static
+    {
+        $this->id_ue = $id_ue;
 
         return $this;
     }

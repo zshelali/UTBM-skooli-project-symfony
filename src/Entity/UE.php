@@ -58,12 +58,19 @@ class UE
     #[ORM\OneToMany(targetEntity: Homework::class, mappedBy: 'id_ue')]
     private Collection $homeworks;
 
+    /**
+     * @var Collection<int, Post>
+     */
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'id_ue')]
+    private Collection $posts;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
         $this->announcements = new ArrayCollection();
         $this->id_user = new ArrayCollection();
         $this->homeworks = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -256,6 +263,36 @@ class UE
             // set the owning side to null (unless already changed)
             if ($homework->getIdUe() === $this) {
                 $homework->setIdUe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->setIdUe($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getIdUe() === $this) {
+                $post->setIdUe(null);
             }
         }
 
