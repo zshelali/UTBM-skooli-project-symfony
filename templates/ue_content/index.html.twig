@@ -10,6 +10,73 @@
 </a>
 {% endif %}
 
+<a href="#" class="add-post-btn-link">
+    <img class="add-post-btn" src="https://img.icons8.com/?size=50&id=11255&format=png" alt="Add post">
+</a>
+
+{% for post in postlist %}
+    {% if post.file == null %}
+        <div class="Actuality_container_text">
+            <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+            <h3 class="Actuality_title">{{ post.title }}</h3>
+
+            {% if post.icon == "info" %}
+                <img class="Actuality_icon" title="Information" width="30" height="30"
+                     src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+            {% elseif post.icon == "important"%}
+                <img class="Actuality_icon" title="! Important !" width="30" height="30"
+                     src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+                     alt="double-exclamation-mark-emoji" />
+            {% endif %}
+            <div class="Actuality_menu">
+                <a class="Actuality_options">&#8285;</a>
+                <div class="dropdown-menu">
+                    <a href="#">Modifier</a>
+                    <a href="#" class="delete-post">Supprimer</a>
+                </div>
+            </div>
+
+            <time class="Actuality_time" >{{ post.postdate|date("H:i \\l\\e j F Y")}}</time>
+
+            <p class="text_paragraph">
+                {{ post.content }}
+            </p>
+        </div>
+
+        <hr />
+    {% elseif post.file != null %}
+        <div class="Actuality_container_file">
+            <img class="Actuality_icon" width="30" height="30"
+                 src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+            <h3 class="Actuality_title">{{ post.title }}</h3>
+            {% if post.icon == "info" %}
+                <img class="Actuality_icon" title="Information" width="30" height="30"
+                     src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+            {% elseif post.icon == "important"%}
+                <img class="Actuality_icon" title="! Important !" width="30" height="30"
+                     src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+                     alt="double-exclamation-mark-emoji" />
+            {% endif %}
+            <div class="Actuality_menu">
+                <a class="Actuality_options">&#8285;</a>
+                <div class="dropdown-menu">
+                    <a href="#">Modifier</a>
+                    <a href="#" class="delete-post">Supprimer</a>
+                </div>
+            </div>
+
+            <time class="Actuality_time" >{{ post.postdate|date("H:i \\l\\e j F Y")}}</time>
+
+            <p class="text_paragraph">{{ post.content }}</p>
+
+            <div class="File_box">
+                <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
+                <a class="File_text" href="{{ post.file }}" download="index">{{ post.file    }}</a>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
 <div class="Actuality_container_text">
     <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
     <h3 class="Actuality_title">Lorem Ipsum</h3>
@@ -77,6 +144,15 @@
 
                 <label for="postContent">Content</label>
                 <textarea id="postContent" name="content" rows="4" required></textarea>
+
+                <div>
+                    <label for="postIcon">Icon</label>
+                    <select name="icon" id="postIcon" class="role-option">
+                        <option value="">None</option>
+                        <option value="info">Information</option>
+                        <option value="important">Important</option>
+                    </select>
+                </div>
 
                 <div class="formGroup">
                     <label for="file">Add file (optional) :</label>
