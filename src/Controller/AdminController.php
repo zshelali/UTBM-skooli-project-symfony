@@ -29,6 +29,7 @@ final class AdminController extends AbstractController
 
             'uelist' => 'PageParts/admin_ue_list.html.twig',
             'userlist' => 'PageParts/admin_manage_users.html.twig',
+            'assignationlist'=>'PageParts/assignation.html.twig',
             'ues' => $ues,
             'users' => $users,
             'roles' => $roles,

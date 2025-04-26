@@ -1,0 +1,57 @@
+{% set styles = ['admin_assignation_style'] %}
+{% set scripts = ['assignation_script'] %}
+{% include 'PageParts/parts_header.html.twig' %}
+
+<h3 class="subtitle">Assign UEs to students</h3>
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<div class="assignation-list-container">
+    <div class="assignation-controls">
+        <div class="search-container">
+            <input type="text" id="assignationSearchInput" placeholder="Search for students or UEs. (BETA)">
+        </div>
+    </div>
+
+    <table id="assignationTable">
+        <thead>
+        <tr>
+            <th>Available UEs</th>
+            <th>Inscriptions for Selected Student</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <table id="assignation-available-ues">
+                    {% for ue in ues %}
+                        <tr>
+                            <td onclick="selectAssignationCourse(this)">{{ ue.code }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            <td>
+                <table id="assignation-registered-ues">
+                    <!-- This will be filled dynamically -->
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="assignation-buttons">
+        <button class="buttonlink" id="assignation-add-btn" onclick="addAssignationCourse()">+ Add</button>
+        <button class="buttonlink" id="assignation-remove-btn" onclick="removeAssignationCourse()">− Remove</button>
+    </div>
+</div>
+
+<h4 class="subtitle">Inspired by ip.utbm.fr :)</h4>
+
+{% include footer %}
