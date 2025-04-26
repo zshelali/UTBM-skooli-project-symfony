@@ -42,6 +42,9 @@ class Post
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $file = null;
 
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $icon = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -157,6 +160,18 @@ class Post
     public function setFile(?string $file): static
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(?string $icon): static
+    {
+        $this->icon = $icon;
 
         return $this;
     }
