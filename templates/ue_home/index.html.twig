@@ -24,11 +24,17 @@
             {% if recentPosts is not empty %}
                 {% for post in recentPosts %}
                     <div class="recent-post">
-                        <h3>{{ post.title }}</h3>
-                        <p>{{ post.content|slice(0, 100) ~ (post.content|length > 100 ? '...' : '') }}</p>
-                        <small>Publié le {{ post.post_date|date('d/m/Y H:i') }}
-                        </small>
+                        <h3>{{ post.title }} <small>({{ post.ue_code }})</small></h3>
+                        <p>
+                            {% if post.content|length > 100 %}
+                                {{ post.content|slice(0, 100) }}...
+                            {% else %}
+                                {{ post.content }}
+                            {% endif %}
+                        </p>
+                        <small>Publié le {{ post.post_date|date('d/m/Y H:i') }}</small>
                     </div>
+
                 {% endfor %}
             {% else %}
                 <p>Aucun post récent pour l'instant</p>
