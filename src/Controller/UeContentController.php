@@ -15,7 +15,10 @@ final class UeContentController extends AbstractController
     public function index(EntityManagerInterface $entityManager, string $CodeUE): Response
     {
         $ue = $entityManager->getRepository(UE::class)->find($CodeUE);
-        $posts = $entityManager->getRepository(Post::class)->find($CodeUE);
+        $posts = $entityManager->getRepository(Post::class)->findBy(
+            ['ueID' => $CodeUE],
+            ['Post.postdate' => 'DESC']
+        );
         ;
 
 

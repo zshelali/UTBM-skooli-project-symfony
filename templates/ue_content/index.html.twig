@@ -14,12 +14,14 @@
             <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
             <h3 class="Actuality_title">{{ post.titre }}</h3>
 
-            <img class="Actuality_icon" title="! Important !" width="30" height="30"
-                 src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-                 alt="double-exclamation-mark-emoji" />
-            <img class="Actuality_icon" title="Information" width="30" height="30"
-                 src="https://img.icons8.com/fluency/30/information.png" alt="information" />
-
+            {% if post.icon == "info" %}
+                <img class="Actuality_icon" title="Information" width="30" height="30"
+                     src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+            {% elseif post.icon == "important"%}
+                <img class="Actuality_icon" title="! Important !" width="30" height="30"
+                     src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+                     alt="double-exclamation-mark-emoji" />
+            {% endif %}
             <div class="Actuality_menu">
                 <a class="Actuality_options">&#8285;</a>
                 <div class="dropdown-menu">
@@ -28,7 +30,7 @@
                 </div>
             </div>
 
-            <time class="Actuality_time" datetime="2025-03-31T13:49:57">13h49 le 31 Mars</time>
+            <time class="Actuality_time" datetime={{ post.postdate }}>{{ post.postdate|date("H:i le j F Y")}}</time>
 
             <p class="text_paragraph">
                 {{ post.content }}
@@ -37,6 +39,35 @@
 
         <hr />
         {% elseif post.type == "file" %}
+            <div class="Actuality_container_file">
+                <img class="Actuality_icon" width="30" height="30"
+                     src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+                <h3 class="Actuality_title">{{ post.title }}</h3>
+                {% if post.icon == "info" %}
+                    <img class="Actuality_icon" title="Information" width="30" height="30"
+                         src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+                {% elseif post.icon == "important"%}
+                    <img class="Actuality_icon" title="! Important !" width="30" height="30"
+                         src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+                         alt="double-exclamation-mark-emoji" />
+                {% endif %}
+                <div class="Actuality_menu">
+                    <a class="Actuality_options">&#8285;</a>
+                    <div class="dropdown-menu">
+                        <a href="#">Modifier</a>
+                        <a href="#" class="delete-post">Supprimer</a>
+                    </div>
+                </div>
+
+                <time class="Actuality_time" datetime="2025-03-31T13:49:57">13h49 le 31 Mars</time>
+
+                <p class="text_paragraph">{{ post.content }}</p>
+
+                <div class="File_box">
+                    <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
+                    <a class="File_text" href="{{ path("home_page") }}" download="index">Fichier à télécharger</a>
+                </div>
+            </div>
         {% endif %}
 {% endfor %}
 
