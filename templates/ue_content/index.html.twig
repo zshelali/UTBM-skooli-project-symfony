@@ -3,10 +3,12 @@
 <div class="UE_name">
     <h1>{{ ue.code }} : {{ ue.name }}</h1>
 </div>
+{% if is_granted('ROLE_PROFESSOR') %}
 
 <a href="#" class="add-post-btn-link">
     <img class="add-post-btn" src="https://img.icons8.com/?size=50&id=11255&format=png" alt="Add post">
 </a>
+{% endif %}
 
 <div class="Actuality_container_text">
     <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
