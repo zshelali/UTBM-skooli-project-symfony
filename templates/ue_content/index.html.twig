@@ -23,6 +23,7 @@
             <img class="Actuality_icon" title="Information" width="30" height="30"
                  src="https://img.icons8.com/fluency/30/information.png" alt="information" />
 
+            {% if is_granted('ROLE_PROFESSOR') %}
             <div class="Actuality_menu">
                 <a class="Actuality_options">&#8285;</a>
                 <div class="dropdown-menu">
@@ -30,6 +31,8 @@
                     <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
                 </div>
             </div>
+            {% endif %}
+
 
 
             <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
