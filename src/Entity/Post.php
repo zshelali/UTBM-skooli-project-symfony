@@ -39,6 +39,9 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private ?UE $id_ue = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $file = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -142,6 +145,18 @@ class Post
     public function setIdUe(?UE $id_ue): static
     {
         $this->id_ue = $id_ue;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): static
+    {
+        $this->file = $file;
 
         return $this;
     }
