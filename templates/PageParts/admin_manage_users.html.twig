@@ -71,7 +71,7 @@
         <span class="close">&times;</span>
         <h3 id="user-modal-title">Edit User</h3>
         <div class="form-container">
-            <form class="reg-log-form" action="{{ path('add_user') }}" method="POST" enctype="multipart/form-data">
+            <form class="reg-log-form" id="user-form" method="POST" enctype="multipart/form-data">
                 <input type="hidden" id="user-index" name="user_index">
 
                 <label for="user-first-name">First name</label>
@@ -97,7 +97,7 @@
                 </div>
 
                 <label for="profile-picture">Profile Picture</label>
-                <input type="file" id="profile-picture" name="profile_picture">
+                <input type="file" id="profile-picture" name="user_input_illustration">
 
                 <button type="submit" id="user-modal-submit" class="buttonlink">Add / Update</button>
             </form>

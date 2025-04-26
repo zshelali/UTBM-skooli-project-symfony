@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const modal = userTab.querySelector("#userEditModal");
   const closeBtn = modal.querySelector(".close");
+  const userForm = userTab.querySelector("#user-form");
   var roles = [];
   var roleString = "";
   var counter = 0;
@@ -29,16 +30,16 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       const row = btn.closest("tr");
       const cells = row.querySelectorAll("td");
-
+      userId = cells[0].textContent.trim();
       const roleName = cells[1].textContent.trim().toLowerCase();
 
       userTab.querySelectorAll("input[name='role']").forEach((radio) => {
         radio.checked = radio.id === `role-${roleName}`;
       });
+      userForm.action = `/admin/update-user/${userId}`
       document.getElementById("user-first-name").value = cells[2].textContent.trim();
       document.getElementById("user-last-name").value = cells[3].textContent.trim();
       document.getElementById("user-email").value = cells[4].textContent.trim();
-      document.getElementById("user-password").value = cells[5].textContent.trim();
 
       // // --- reset and extract role ---
       // roles = [];
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // }
 
       userTab.querySelector("#user-modal-title").textContent = "Edit user";
-      userTab.querySelector("#user-modal-submit").textContent = "Confirm update";
+      userTab.querySelector("#user-modal-submit").textContent = "Update";
       modal.style.display = "block";
     });
   });
@@ -81,12 +82,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = userTab.querySelector(".add-btn");
   if (addBtn) {
     addBtn.addEventListener("click", () => {
+      userForm.action = "/admin/add-user"
       userTab.querySelector("#user-first-name").value = "";
       userTab.querySelector("#user-last-name").value = "";
       userTab.querySelector("#user-email").value = "";
       userTab.querySelector("#user-password").value = generateRandomPassword(RANDOM_PASSWORD_LENGTH);
       userTab.querySelector("#user-modal-title").textContent = "Add a new user";
-      userTab.querySelector("#user-modal-submit").textContent = "Add user";
+      userTab.querySelector("#user-modal-submit").textContent = "Add";
       modal.style.display = "block";
     });
   }
