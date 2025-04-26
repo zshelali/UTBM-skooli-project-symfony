@@ -58,4 +58,34 @@ class UEController extends AbstractController
 
         return $newFilename;
     }
+    #[Route('/admin/update-ue/{id}', name: 'update_ue', methods: ['POST'])]
+    public function updateUE(Request $request, EntityManagerInterface $entityManager, UE $ue): Response
+    {
+        $ue->setCode($request->request->get('ue_code'));
+        $ue->setName($request->request->get('ue_name'));
+        $ue->setDescription($request->request->get('ue_description'));
+        $ue->setCredits((int)$request->request->get('ue_credits'));
+        $ue->setLastUpdateDate(new \DateTime());
+
+        $imageFile = $request->files->get('ue_input_illustration');
+        if ($imageFile instanceof UploadedFile) {
+            $newFilename = $this->handleImageUpload($imageFile);
+            $ue->setIllustration($newFilename);
+        }
+
+        $entityManager->flush();
+        $this->addFlash('success', 'UE successfully updated!');
+        return $this->redirectToRoute('admin_home');
+    }
+
+    #[Route('/admin/delete-ue/{id}', name: 'delete_ue', methods: ['POST'])]
+    public function deleteUE(EntityManagerInterface $entityManager, UE $ue): Response
+    {
+        $entityManager->remove($ue);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'UE successfully deleted!');
+        return $this->redirectToRoute('admin_home');
+    }
+
 }

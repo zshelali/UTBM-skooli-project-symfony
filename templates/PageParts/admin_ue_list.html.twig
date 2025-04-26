@@ -25,7 +25,7 @@
         {% for ue in ues %}
             <tr>
                 <td>{{ ue.id }}</td>
-                <td>{{ ue.code }}</td>  <!-- Affichage du code de l'UE -->
+                <td>{{ ue.code }}</td>
                 <td>{{ ue.name }}</td>
                 <td>{{ ue.description }}</td>
                 <td>{{ ue.credits }}</td>
@@ -39,13 +39,14 @@
                 <td>
                     <div class="man-del-btn-container">
                         <button class="buttonlink edit-btn"><img src="{{ asset('images/edit.png') }}" alt="edit" class="edit-img"></button>
-                        <button onclick="deleteUERow()" class="buttonlink del-btn"><img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img"></button>
+                        <form method="POST" action="{{ path('delete_ue', {'id': ue.id}) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this UE?');">
+                            <button type="submit" class="buttonlink del-btn"><img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img"></button>
+                        </form>
                     </div>
                 </td>
             </tr>
         {% endfor %}
     </table>
-
 </div>
 
 <div id="ueEditModal" class="modal">
@@ -53,7 +54,7 @@
         <span class="close">&times;</span>
         <h3 id="ue-modal-title">UE settings</h3>
         <div class="form-container">
-            <form class="reg-log-form" action="{{ path('add_ue') }}" method="POST" enctype="multipart/form-data">
+            <form class="reg-log-form" id="ue-form" method="POST" enctype="multipart/form-data">
                 <label for="ue-code">UE Code</label>
                 <input type="text" id="ue-code" name="ue_code" required>
 
