@@ -38,8 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       userForm.action = `/admin/update-user/${userId}`
       document.getElementById("user-first-name").value = cells[2].textContent.trim();
+      document.getElementById("user-first-name").required = false;
+
       document.getElementById("user-last-name").value = cells[3].textContent.trim();
+      document.getElementById("user-last-name").required = false;
+
       document.getElementById("user-email").value = cells[4].textContent.trim();
+      document.getElementById("user-email").required = false;
+
+      document.getElementById("user-password").required = false;
+
 
       // // --- reset and extract role ---
       // roles = [];
@@ -83,6 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (addBtn) {
     addBtn.addEventListener("click", () => {
       userForm.action = "/admin/add-user"
+
+      document.getElementById("user-first-name").required = true;
+      document.getElementById("user-last-name").required = true;
+      document.getElementById("user-email").required = true;
+      document.getElementById("user-password").required = true;
+
       userTab.querySelector("#user-first-name").value = "";
       userTab.querySelector("#user-last-name").value = "";
       userTab.querySelector("#user-email").value = "";

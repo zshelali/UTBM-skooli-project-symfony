@@ -70,7 +70,10 @@ class UserController extends AbstractController
         $user->setFirstName($request->request->get('first_name'));
         $user->setLastName($request->request->get('last_name'));
         $user->setEmail($request->request->get('email'));
-        $user->setPassword(password_hash($request->request->get('password'), PASSWORD_DEFAULT));
+
+        if (!($request->request->get('password') == null)) {
+            $user->setPassword(password_hash($request->request->get('password'), PASSWORD_DEFAULT));
+        }
 
         $role = $entityManager->getRepository(Role::class)->find($request->request->get('role'));
         $user->setIdRole($role);
