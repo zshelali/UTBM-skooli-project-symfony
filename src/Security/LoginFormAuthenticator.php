@@ -66,6 +66,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($this->urlGenerator->generate('ue_home'));
         }
 
+        if (in_array('ROLE_PROFADMIN', $user->getRoles(), true)) {
+            return new RedirectResponse($this->urlGenerator->generate('ue_home'));
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('home_page'));
     }
 

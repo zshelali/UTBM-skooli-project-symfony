@@ -35,7 +35,13 @@
 <body>
 <div class="title-container">
     <h1>
-        <a href="{{ path('home_page') }}" id="maintitle" class="link-hover">Skooli<span class="dotcom">.com</span></a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_home') }}" id="maintitle" class="link-hover">Skooli<span class="dotcom">.com</span></a>
+        {% elseif is_granted('ROLE_STUDENT') or is_granted('ROLE_PROFESSOR') or is_granted('ROLE_PROFADMIN')%}
+            <a href="{{ path('ue_home') }}" id="maintitle" class="link-hover">Skooli<span class="dotcom">.com</span></a>
+        {% else %}
+            <a href="{{ path('home_page') }}" id="maintitle" class="link-hover">Skooli<span class="dotcom">.com</span></a>
+        {% endif %}
     </h1>
     <div class="logo-container">
         <a href="https://utbm.fr">
@@ -45,7 +51,7 @@
 </div>
 <br />
 <nav id="reg-log-nav">
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFADMIN') %}
         <a href="{{ path('admin_home') }}" class="buttonlink nav-button">Admin zone</a>
     {% endif %}
     {% if app.user %}
