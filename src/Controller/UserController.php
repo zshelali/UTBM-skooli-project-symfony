@@ -63,6 +63,29 @@ class UserController extends AbstractController
         return $newFilename;
     }
 
+
+    #[Route('/admin/update-user/{id}', name: 'update_user', methods: ['POST'])]
+    public function updateUser(Request $request, EntityManagerInterface $entityManager, User $user): Response
+    {
+        $user->setFirstName($request->request->get('first_name'));
+        $user->setLastName($request->request->get('last_name'));
+        $user->setEmail($request->request->get('email'));
+        $user->setPassword(password_hash($request->request->get('password'), PASSWORD_DEFAULT));
+        $user->setIdRole($request->request->get('role'));
+
+
+        $imageFile = $request->files->get('user_input_illustration');
+        if ($imageFile instanceof UploadedFile) {
+            $newFilename = $this->handleImageUpload($imageFile);
+            $user->setProfilePicture($newFilename);
+        }
+
+        $entityManager->flush();
+        $this->addFlash('success', 'User successfully updated.');
+        return $this->redirectToRoute('admin_home');
+    }
+
+
     #[Route('/admin/delete-user/{id}', name: 'delete_user', methods: ['POST'])]
     public function deleteUser(EntityManagerInterface $entityManager, User $user): Response
     {
