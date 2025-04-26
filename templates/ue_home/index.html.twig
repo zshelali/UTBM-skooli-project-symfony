@@ -1,13 +1,14 @@
 {% include header %}
 
-<h3 class="subtitle">Hello, {{ user.idRole.name }} {{ user.firstname|default('John') }}.</h3>
+<h3 class="subtitle">Hello, {{ user.firstname|default('John') }}.</h3>
+
 <div class="content-wrapper">
     <div class="ueGrid">
 
         {% for ue in ues %}
             <div class="ueGridBox{{ loop.index }} ueBox">
-                <a href="{{ path('ue_content') }}">
-                    <h4>{{ ue.code }}</h4>
+                <a href="{{ path('ue_content', {'id': ue.id}) }}">
+                <h4>{{ ue.code }}</h4>
                     {% if ue.illustration %}
                         <img src="{{ asset('uploads/ue_images/' ~ ue.illustration) }}" alt="{{ ue.code }}">
                     {% else %}
