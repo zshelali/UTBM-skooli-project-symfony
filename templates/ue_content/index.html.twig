@@ -10,9 +10,7 @@
 </a>
 {% endif %}
 
-<a href="#" class="add-post-btn-link">
-    <img class="add-post-btn" src="https://img.icons8.com/?size=50&id=11255&format=png" alt="Add post">
-</a>
+
 
 {% for post in postlist %}
     {% if post.file == null %}
@@ -77,7 +75,8 @@
     {% endif %}
 {% endfor %}
 
-<div class="Actuality_container_text">
+
+{# <div class="Actuality_container_text">
     <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
     <h3 class="Actuality_title">Lorem Ipsum</h3>
 
@@ -132,7 +131,7 @@
 </div>
 
 
-
+#}
 <div id="addPostModal" class="modal">
     <div class="modal-content">
         <span class="close-post" onclick="closePostModal()">×</span>
