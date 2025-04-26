@@ -1,6 +1,6 @@
 {% include header %}
 
-<h3 class="subtitle">Hello, {{ user.firstname|default('John') }}.</h3>
+<h3 class="subtitle">Hello, {{ user.idRole.name }} {{ user.firstname|default('John') }}.</h3>
 <div class="content-wrapper">
     <div class="ueGrid">
 
