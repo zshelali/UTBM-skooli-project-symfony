@@ -4,6 +4,14 @@
 
 <h3 class="subtitle">Current UEs.</h3>
 
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert flash-{{ label }} ">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
 <div class="ue-list-container">
     <div class="user-controls">
         <div class="search-container">

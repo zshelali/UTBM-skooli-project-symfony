@@ -46,7 +46,7 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $this->addFlash('success', 'User successfully added!');
+        $this->addFlash('success', 'User successfully added.');
         return $this->redirectToRoute('admin_home');
     }
 
@@ -62,4 +62,23 @@ class UserController extends AbstractController
 
         return $newFilename;
     }
+
+    #[Route('/admin/delete-user/{id}', name: 'delete_user', methods: ['POST'])]
+    public function deleteUser(EntityManagerInterface $entityManager, User $user): Response
+    {
+
+        $currentUser = $this->getUser();
+
+        if ($currentUser->getId() === $user->getId() || $user->getId() === 1 ){ //make sure the current user and the admin (id=1) can't be deleted
+            $this->addFlash('error', 'You can\'t delete yourself or the main admin.');
+            return $this->redirectToRoute('admin_home');
+        }
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'User successfully deleted.');
+        return $this->redirectToRoute('admin_home');
+    }
+
 }

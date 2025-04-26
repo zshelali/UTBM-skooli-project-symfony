@@ -42,7 +42,7 @@ class UEController extends AbstractController
         $entityManager->persist($ue);
         $entityManager->flush();
 
-        $this->addFlash('success', 'UE successfully added!');
+        $this->addFlash('success', 'UE successfully added.');
         return $this->redirectToRoute('admin_home');
     }
 
@@ -74,7 +74,7 @@ class UEController extends AbstractController
         }
 
         $entityManager->flush();
-        $this->addFlash('success', 'UE successfully updated!');
+        $this->addFlash('success', 'UE successfully updated.');
         return $this->redirectToRoute('admin_home');
     }
 
@@ -84,7 +84,7 @@ class UEController extends AbstractController
         $entityManager->remove($ue);
         $entityManager->flush();
 
-        $this->addFlash('success', 'UE successfully deleted!');
+        $this->addFlash('success', 'UE successfully deleted.');
         return $this->redirectToRoute('admin_home');
     }
 
