@@ -3,155 +3,118 @@
 <div class="UE_name">
     <h1>{{ ue.code }} : {{ ue.name }}</h1>
 </div>
-{% if is_granted('ROLE_PROFESSOR') %}
 
-<a href="#" class="add-post-btn-link">
-    <img class="add-post-btn" src="https://img.icons8.com/?size=50&id=11255&format=png" alt="Add post">
-</a>
+{% if is_granted('ROLE_PROFESSOR') %}
+    <a href="#" class="add-post-btn-link">
+        <img class="add-post-btn" src="https://img.icons8.com/?size=50&id=11255&format=png" alt="Add post">
+    </a>
 {% endif %}
 
-
-
-{% for post in postlist %}
-    {% if post.file == null %}
+{% if posts is not empty %}
+    {# parcours les posts #}
+    {% for post in posts %}
         <div class="Actuality_container_text">
             <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
             <h3 class="Actuality_title">{{ post.title }}</h3>
 
-            {% if post.icon == "info" %}
-                <img class="Actuality_icon" title="Information" width="30" height="30"
-                     src="https://img.icons8.com/fluency/30/information.png" alt="information" />
-            {% elseif post.icon == "important"%}
-                <img class="Actuality_icon" title="! Important !" width="30" height="30"
-                     src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-                     alt="double-exclamation-mark-emoji" />
-            {% endif %}
+            <img class="Actuality_icon" title="! Important !" width="30" height="30"
+                 src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+                 alt="double-exclamation-mark-emoji" />
+            <img class="Actuality_icon" title="Information" width="30" height="30"
+                 src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+
             <div class="Actuality_menu">
                 <a class="Actuality_options">&#8285;</a>
                 <div class="dropdown-menu">
-                    <a href="#">Modifier</a>
-                    <a href="#" class="delete-post">Supprimer</a>
+                    <a href="#" class="edit-post" data-id="{{ post.id }}" data-title="{{ post.title }}" data-content="{{ post.content }}">Modifier</a>
+                    <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
                 </div>
             </div>
 
-            <time class="Actuality_time" >{{ post.postdate|date("H:i \\l\\e j F Y")}}</time>
+
+            <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
+                {{ post.postDate|date('H\\hi \\l\\e d F') }}
+            </time>
 
             <p class="text_paragraph">
                 {{ post.content }}
             </p>
-        </div>
 
-        <hr />
-    {% elseif post.file != null %}
-        <div class="Actuality_container_file">
-            <img class="Actuality_icon" width="30" height="30"
-                 src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
-            <h3 class="Actuality_title">{{ post.title }}</h3>
-            {% if post.icon == "info" %}
-                <img class="Actuality_icon" title="Information" width="30" height="30"
-                     src="https://img.icons8.com/fluency/30/information.png" alt="information" />
-            {% elseif post.icon == "important"%}
-                <img class="Actuality_icon" title="! Important !" width="30" height="30"
-                     src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-                     alt="double-exclamation-mark-emoji" />
-            {% endif %}
-            <div class="Actuality_menu">
-                <a class="Actuality_options">&#8285;</a>
-                <div class="dropdown-menu">
-                    <a href="#">Modifier</a>
-                    <a href="#" class="delete-post">Supprimer</a>
+            {% if post.file %}
+                <div class="Actuality_container_file">
+                    <img class="Actuality_icon" width="30" height="30"
+                         src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+                    <h3 class="Actuality_title">Fichier attaché</h3>
+
+                    <div class="Actuality_menu">
+                        <a class="Actuality_options">&#8285;</a>
+                        <div class="dropdown-menu">
+                            <a href="#">Modifier</a>
+                            <a href="#" class="delete-post" data-id="{{ post.id }}">Supprimer</a>
+                        </div>
+                    </div>
+
+                    <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
+                        {{ post.postDate|date('H\\hi \\l\\e d F') }}
+                    </time>
+
+                    <p class="text_paragraph">Cliquez ci-dessous pour télécharger le fichier joint</p>
+
+                    <div class="File_box">
+                        <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
+                        <a class="File_text" href="{{ asset('uploads/' ~ post.file) }}" download="{{ post.file }}">
+                            Télécharger le fichier
+                        </a>
+                    </div>
                 </div>
+            {% endif %}
+        </div>
+        <hr />
+    {% endfor %}
+
+{% else %}
+    {# s'il n'y a aucun post, on garde le modèle du faux post mais on change le texte #}
+    <div class="Actuality_container_text">
+        <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+        <h3 class="Actuality_title">Pas de post disponible</h3>
+
+        <img class="Actuality_icon" title="! Important !" width="30" height="30"
+             src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+             alt="double-exclamation-mark-emoji" />
+        <img class="Actuality_icon" title="Information" width="30" height="30"
+             src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+
+        <div class="Actuality_menu">
+            <a class="Actuality_options">&#8285;</a>
+            <div class="dropdown-menu">
+                <a href="#">Modifier</a>
+                <a href="#" class="delete-post">Supprimer</a>
             </div>
-
-            <time class="Actuality_time" >{{ post.postdate|date("H:i \\l\\e j F Y")}}</time>
-
-            <p class="text_paragraph">{{ post.content }}</p>
-
-            <div class="File_box">
-                <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
-                <a class="File_text" href="{{ post.file }}" download="index">{{ post.file    }}</a>
-            </div>
         </div>
-    {% endif %}
-{% endfor %}
 
+        <time class="Actuality_time" datetime="{{ "now"|date('Y-m-d\\TH:i:s') }}">
+            {{ "now"|date('H\\hi \\l\\e d F') }}
+        </time>
 
-{# <div class="Actuality_container_text">
-    <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
-    <h3 class="Actuality_title">Lorem Ipsum</h3>
-
-    <img class="Actuality_icon" title="! Important !" width="30" height="30"
-         src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-         alt="double-exclamation-mark-emoji" />
-    <img class="Actuality_icon" title="Information" width="30" height="30"
-         src="https://img.icons8.com/fluency/30/information.png" alt="information" />
-
-    <div class="Actuality_menu">
-        <a class="Actuality_options">&#8285;</a>
-        <div class="dropdown-menu">
-            <a href="#">Modifier</a>
-            <a href="#" class="delete-post">Supprimer</a>
-        </div>
+        <p class="text_paragraph">
+            Aucun post n'a encore été publié pour cette UE. Revenez plus tard ou ajoutez un post si vous êtes professeur !
+        </p>
     </div>
 
-    <time class="Actuality_time" datetime="2025-03-31T13:49:57">13h49 le 31 Mars</time>
+    <hr />
+{% endif %}
 
-    <p class="text_paragraph">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non viverra enim. Aliquam semper tempus leo non faucibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis egestas tempor ullamcorper. Donec dolor ligula, volutpat nec consectetur eu, cursus a enim. Nullam nibh neque, commodo in lorem rutrum, laoreet interdum elit. Pellentesque eu nunc eu felis tempor eleifend sit amet nec leo. Integer in pharetra mi. Ut dignissim, tortor ac imperdiet fringilla, turpis tortor finibus ligula, in sagittis neque ex eget eros. Mauris congue fringilla arcu, eget placerat arcu imperdiet volutpat. Fusce a posuere sapien.
-
-        Donec ut rutrum neque. Proin pellentesque, massa sit amet euismod rhoncus, arcu quam blandit ex, a tincidunt lectus lectus vitae tellus. Sed vestibulum magna eget sem dictum, a fermentum libero placerat. Nullam posuere tellus et elit tempor, ut sollicitudin enim porttitor. Nulla nec velit at sapien interdum lobortis a et lectus. Praesent eget scelerisque ex. Fusce in turpis et nisl ornare tincidunt eu feugiat purus. Sed sit amet odio convallis, pretium lectus quis, porta lacus. Nullam arcu eros, feugiat eget augue nec, luctus gravida orci. Duis sed ultricies orci. Proin in congue ipsum. Integer dignissim eu turpis ut dignissim. Fusce lacinia erat in orci egestas ullamcorper et quis nisi. Quisque semper libero ac eleifend ornare.
-
-        In hac habitasse platea dictumst. Morbi in tincidunt enim. Proin tempus nulla at dui egestas, ut rutrum erat auctor. Sed sed scelerisque lacus. Praesent urna ipsum, auctor ut finibus non, vulputate eu neque. Etiam imperdiet libero at fermentum efficitur. Aenean in dui nec sapien molestie gravida sit amet blandit lectus. Aenean leo quam, laoreet a ornare in, rhoncus a sapien. Sed maximus mi et turpis tempus, in molestie risus vestibulum. Nunc vehicula, sapien vitae tempor interdum, tellus est finibus ante, ut congue orci mauris eget nisl.
-    </p>
-</div>
-
-<hr />
-
-<div class="Actuality_container_file">
-    <img class="Actuality_icon" width="30" height="30"
-         src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
-    <h3 class="Actuality_title">Lorem Ipsum</h3>
-
-    <div class="Actuality_menu">
-        <a class="Actuality_options">&#8285;</a>
-        <div class="dropdown-menu">
-            <a href="#">Modifier</a>
-            <a href="#" class="delete-post">Supprimer</a>
-        </div>
-    </div>
-
-    <time class="Actuality_time" datetime="2025-03-31T13:49:57">13h49 le 31 Mars</time>
-
-    <p class="text_paragraph">Le descriptif d'un fichier ou une explication de pourquoi il y a le fichier</p>
-
-    <div class="File_box">
-        <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
-        <a class="File_text" href="{{ path("home_page") }}" download="index">Fichier à télécharger</a>
-    </div>
-</div>
-
-
-#}
 <div id="addPostModal" class="modal">
     <div class="modal-content">
         <span class="close-post" onclick="closePostModal()">×</span>
         <div class="post-form-box">
             <h2 id="modal-title">Add post</h2>
-            <form id="addPostForm">
+            <form id="addPostForm" method="POST" action="{{ path('post_add', { id: ue.id }) }}" enctype="multipart/form-data">
                 <label for="postTitle">Title</label>
                 <input type="text" id="postTitle" name="title" required />
 
                 <label for="postContent">Content</label>
                 <textarea id="postContent" name="content" rows="4" required></textarea>
-
-                <div>
-                    <label for="postIcon">Icon</label>
-                    <select name="icon" id="postIcon" class="role-option">
-                        <option value="">None</option>
-                        <option value="info">Information</option>
-                        <option value="important">Important</option>
-                    </select>
-                </div>
 
                 <div class="formGroup">
                     <label for="file">Add file (optional) :</label>
@@ -181,5 +144,63 @@
         }
     });
 </script>
+<script>
+    // Ouvrir le modal pour "Ajouter un post"
+    document.querySelector('.add-post-btn-link').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('addPostModal').style.display = 'block';
+        document.getElementById('modal-title').innerText = 'Add post';
+        document.getElementById('modal-submit').innerText = 'Publier';
+        document.getElementById('addPostForm').action = "{{ path('post_add', { id: ue.id }) }}";
+
+        // reset le form
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postContent').value = '';
+    });
+
+    // Ouvrir le modal pour "Modifier un post"
+    document.querySelectorAll('.dropdown-menu a:first-child').forEach(editBtn => {
+        editBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('addPostModal').style.display = 'block';
+            document.getElementById('modal-title').innerText = 'Update post';
+            document.getElementById('modal-submit').innerText = 'Mettre à jour';
+
+        });
+    });
+
+    // Fermer le modal
+    function closePostModal() {
+        document.getElementById('addPostModal').style.display = 'none';
+    }
+    // pour ouvrir en mode édition
+    document.querySelectorAll('.edit-post').forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const title = this.getAttribute('data-title');
+            const content = this.getAttribute('data-content');
+            const id = this.getAttribute('data-id');
+
+            // remplir les champs
+            document.getElementById('postTitle').value = title;
+            document.getElementById('postContent').value = content;
+
+            // changer l'action du formulaire pour UPDATE
+            document.getElementById('addPostForm').action = `/post/${id}/update`;
+
+            // changer le texte du bouton
+            document.getElementById('modal-submit').textContent = 'Update';
+
+            // changer le titre du modal
+            document.getElementById('modal-title').textContent = 'Update post';
+
+            // ouvrir le modal
+            openPostModal();
+        });
+    });
+
+</script>
+
 
 {% include footer %}
