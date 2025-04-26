@@ -2,69 +2,35 @@
 
 <h3 class="subtitle">Hello, John.</h3>
 <div class="content-wrapper">
-    <h3 class="subtitle">Hello, John.</h3>
+    <div class="ueGrid">
 
-    <div class="content-wrapper">
-        <!-- Matières existantes -->
-        <div class="ueGrid">
-
-            <div class="ueGridBox1 ueBox">
+        {% for ue in ues %}
+            <div class="ueGridBox{{ loop.index }} ueBox">
                 <a href="{{ path('ue_content') }}">
-                    <h4>IT41</h4>
-                    <img src="{{ asset('images/it41_gpt.png') }}" alt="IT41">
+                    <h4>{{ ue.code }}</h4>
+                    {% if ue.illustration %}
+                        <img src="{{ asset('uploads/ue_images/' ~ ue.illustration) }}" alt="{{ ue.code }}">
+                    {% else %}
+                        <img src="{{ asset('images/default_ue.png') }}" alt="Default Image">
+                    {% endif %}
                 </a>
             </div>
+        {% endfor %}
 
-            <div class="ueGridBox2 ueBox">
-                <a href="{{ path('ue_content') }}">
-                    <h4>IT44</h4>
-                    <img src="{{ asset('images/it44_gpt.png') }}" alt="IT44">
-                </a>
+        <div class="separator"></div>
+
+        <div class="recent-posts">
+            <div class="recent-posts-header">
+                <h2>Publications récentes</h2>
             </div>
-
-            <div class="ueGridBox3 ueBox">
-                <a href="{{ path('ue_content') }}">
-                    <h4>WE4A</h4>
-                    <img src="{{ asset('images/WE4A_gpt.png') }}" alt="WE4A">
-                </a>
-            </div>
-
-            <div class="ueGridBox4 ueBox">
-                <a href="{{ path('ue_content') }}">
-                    <h4>LC00</h4>
-                    <img src="{{ asset('images/lc00_gpt.png') }}" alt="LC00">
-                </a>
-            </div>
-
-            <div class="ueGridBox5 ueBox">
-                <a href="{{ path('ue_content') }}">
-                    <h4>SO04</h4>
-                    <img src="{{ asset('images/so04_gpt.png') }}" alt="SO04">
-                </a>
-            </div>
-
-            <div class="ueGridBox6 ueBox">
-                <a href="{{ path('ue_content') }}">
-                    <h4>SI40</h4>
-                    <img src="{{ asset('images/si40_gpt.png') }}" alt="SI40">
-                </a>
-            </div>
-
-            <!-- Séparation -->
-            <div class="separator"></div>
-
-            <!-- Publications récentes -->
-            <div class="recent-posts">
-                <div class="recent-posts-header">
-                    <h2>Publications récentes</h2>
-                </div>
-                <div id="posts-container">
-                    <div>
-                        <p>Ici seront affichés les posts récents</p>
-                    </div>
+            <div id="posts-container">
+                <div>
+                    <p>Ici seront affichés les posts récents</p>
                 </div>
             </div>
-
         </div>
+
     </div>
+</div>
+
 {% include footer %}
