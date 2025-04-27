@@ -30,7 +30,7 @@ final class UeContentController extends AbstractController
             throw $this->createNotFoundException('UE non trouvée.');
         }
 
-        $posts = $postRepository->findBy(['id_ue' => $ue]);
+        $posts = $postRepository->findBy(['id_ue' => $ue],['post_date' => 'DESC']);
 
         return $this->render('ue_content/index.html.twig', [
             'styles' => ['UE_page_style', 'UE_prof'],
