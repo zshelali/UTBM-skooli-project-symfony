@@ -10,45 +10,54 @@
     </a>
 {% endif %}
 
+
 {% if posts is not empty %}
     {# parcours les posts #}
     {% for post in posts %}
-        <div class="Actuality_container_text">
-            <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
-            <h3 class="Actuality_title">{{ post.title }}</h3>
 
-            <img class="Actuality_icon" title="! Important !" width="30" height="30"
-                 src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-                 alt="double-exclamation-mark-emoji" />
-            <img class="Actuality_icon" title="Information" width="30" height="30"
-                 src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+        {# Si le post est un post de texte #}
+        {% if post.file == null %}
+            <div class="Actuality_container_text">
+                <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+                <h3 class="Actuality_title">{{ post.title }}</h3>
+                {% if post.icon == "important" %}
+                    <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+                         alt="double-exclamation-mark-emoji" />
 
-            {% if is_granted('ROLE_PROFESSOR') %}
-            <div class="Actuality_menu">
-                <a class="Actuality_options">&#8285;</a>
-                <div class="dropdown-menu">
-                    <a href="#" class="edit-post" data-id="{{ post.id }}" data-title="{{ post.title }}" data-content="{{ post.content }}">Modifier</a>
-                    <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
-                </div>
+                {% elseif post.icon == "information" %}
+                    <img class="Actuality_icon" title="Information" width="30" height="30" src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+                {% endif %}
+                {% if is_granted('ROLE_PROFESSOR') %}
+                    <div class="Actuality_menu">
+                        <a class="Actuality_options">&#8285;</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="edit-post" data-id="{{ post.id }}" data-title="{{ post.title }}" data-content="{{ post.content }}">Modifier</a>
+                            <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
+                        </div>
+                    </div>
+                {% endif %}
+                <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
+                    {{ post.postDate|date('H\\hi \\l\\e d F') }}
+                </time>
+                <p class="text_paragraph">
+                    {{ post.content }}
+                </p>
             </div>
-            {% endif %}
+        {% elseif post.file != null %}
+            <div class="Actuality_container_file">
+                <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/material-outlined/24/upload-to-cloud.png"
+                     alt="upload-to-cloud"/>
+                <h3 class="Actuality_title">Fichier attaché</h3>
+                {% if post.icon == "important" %}
+                    <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
+                         alt="double-exclamation-mark-emoji" />
+
+                {% elseif post.icon == "information" %}
+                    <img class="Actuality_icon" title="Information" width="30" height="30" src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+                {% endif %}
 
 
-
-            <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
-                {{ post.postDate|date('H\\hi \\l\\e d F') }}
-            </time>
-
-            <p class="text_paragraph">
-                {{ post.content }}
-            </p>
-
-            {% if post.file %}
-                <div class="Actuality_container_file">
-                    <img class="Actuality_icon" width="30" height="30"
-                         src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
-                    <h3 class="Actuality_title">Fichier attaché</h3>
-
+                {% if is_granted("ROLE_PROFESSOR") %}
                     <div class="Actuality_menu">
                         <a class="Actuality_options">&#8285;</a>
                         <div class="dropdown-menu">
@@ -56,22 +65,22 @@
                             <a href="#" class="delete-post" data-id="{{ post.id }}">Supprimer</a>
                         </div>
                     </div>
+                {% endif%}
 
-                    <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
-                        {{ post.postDate|date('H\\hi \\l\\e d F') }}
-                    </time>
+                <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
+                    {{ post.postDate|date('H\\hi \\l\\e d F') }}
+                </time>
 
-                    <p class="text_paragraph">Cliquez ci-dessous pour télécharger le fichier joint</p>
+                <p class="text_paragraph">{{post.content}}</p>
 
-                    <div class="File_box">
-                        <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
-                        <a class="File_text" href="{{ asset('uploads/' ~ post.file) }}" download="{{ post.file }}">
-                            Télécharger le fichier
-                        </a>
-                    </div>
+                <div class="File_box">
+                    <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
+                    <a class="File_text" href="{{ asset('uploads/' ~ post.file) }}" download="{{ post.file }}">
+                        {{ post.file }}
+                    </a>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
         <hr />
     {% endfor %}
 
@@ -179,27 +188,29 @@
     // pour ouvrir en mode édition
     document.querySelectorAll('.edit-post').forEach(button => {
         button.addEventListener('click', function (e) {
-            e.preventDefault();
+                e.preventDefault();
 
-            const title = this.getAttribute('data-title');
-            const content = this.getAttribute('data-content');
-            const id = this.getAttribute('data-id');
+                const title = this.getAttribute('data-title');
+                const content = this.getAttribute('data-content');
+                const id = this.getAttribute('data-id');
 
-            // remplir les champs
-            document.getElementById('postTitle').value = title;
-            document.getElementById('postContent').value = content;
+                // remplir les champs
+                document.getElementById('postTitle').value = title;
+                document.getElementById('postContent').value = content;
 
-            // changer l'action du formulaire pour UPDATE
-            document.getElementById('addPostForm').action = `/post/${id}/update`;
+                // changer l'action du formulaire pour UPDATE
+                document.getElementById('addPostForm').action = `/post/${id}/update`;
 
-            // changer le texte du bouton
-            document.getElementById('modal-submit').textContent = 'Update';
+                // changer le texte du bouton
+                document.getElementById('modal-submit').textContent = 'Update';
 
-            // changer le titre du modal
-            document.getElementById('modal-title').textContent = 'Update post';
+                // changer le titre du modal
+                document.getElementById('modal-title').textContent = 'Update post';
 
-            // ouvrir le modal
-            openPostModal();
+                // ouvrir le modal
+                openPostModal();
+
+
         });
     });
 
