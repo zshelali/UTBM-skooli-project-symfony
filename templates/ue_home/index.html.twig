@@ -22,24 +22,20 @@
 
         <div id="posts-container">
             {% if recentPosts is not empty %}
-                {% for post in recentPosts %}
-                    <div class="recent-post">
-                        <h3>{{ post.title }} <small>({{ post.ue_code }})</small></h3>
-                        <p>
-                            {% if post.content|length > 100 %}
-                                {{ post.content|slice(0, 100) }}...
-                            {% else %}
-                                {{ post.content }}
-                            {% endif %}
-                        </p>
-                        <small>Publié le {{ post.post_date|date('d/m/Y H:i') }}</small>
-                    </div>
-
-                {% endfor %}
+                <ul>
+                    {% for post in recentPosts %}
+                        <li>
+                            • {{ post.first_name|default('Un utilisateur') }} {{ post.lastname|default('') }}
+                            a posté
+                            « {{ post.title }} » dans {{ post.ue_code }}
+                        </li>
+                    {% endfor %}
+                </ul>
             {% else %}
                 <p>Aucun post récent pour l'instant</p>
             {% endif %}
         </div>
+
 
 
     </div>

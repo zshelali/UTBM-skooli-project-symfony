@@ -26,12 +26,18 @@ final class UeHomeController extends AbstractController
         // Utiliser une requête SQL
         $connection = $doctrine->getConnection();
         $sql = "
-            SELECT p.id, p.title, p.content, p.post_date, u.code AS ue_code
-            FROM post p
-            INNER JOIN ue u ON p.id_ue_id = u.id
-            ORDER BY p.post_date DESC
-            LIMIT 5
-        ";
+    SELECT p.id, p.title, p.content, p.post_date, u.code AS ue_code, 
+           u2.first_name, u2.last_name
+    FROM post p
+    INNER JOIN ue u ON p.id_ue_id = u.id
+    INNER JOIN \"user\" u2 ON p.id_user_id = u2.id
+    ORDER BY p.post_date DESC
+    LIMIT 5
+";
+
+
+
+
         $stmt = $connection->executeQuery($sql);
         $recentPosts = $stmt->fetchAllAssociative();
 
