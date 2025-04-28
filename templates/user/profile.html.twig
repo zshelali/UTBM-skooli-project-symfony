@@ -24,8 +24,7 @@
         <label for="password">Mot de passe :</label>
         <input id="password" name="password" type="password" placeholder="Laissez vide si vous ne voulez pas changer le mot de passe" />
 
-        <label for="show-password">Show password :</label>
-        <input id="show-password" type="checkbox" onclick="toggleShowPassword()" />
+
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('profile_update') }}" />
 
