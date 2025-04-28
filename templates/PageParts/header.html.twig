@@ -55,6 +55,7 @@
         <a href="{{ path('admin_home') }}" class="buttonlink nav-button">Admin zone</a>
     {% endif %}
     {% if app.user %}
+        <a href="{{ path('app_profile') }}" class="buttonlink nav-button">Profil</a>
         <form action="{{ path('app_logout') }}" method="post">
             <button type="submit" class="buttonlink nav-button">Logout</button>
         </form>
