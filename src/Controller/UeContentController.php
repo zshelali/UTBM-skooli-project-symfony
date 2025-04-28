@@ -31,12 +31,12 @@ final class UeContentController extends AbstractController
         }
         $conn = $em->getConnection();
         $sql = '
-    SELECT p.id, p.title, p.content, p.post_date, p.file, p.icon, u.first_name, u.last_name
+    SELECT p.id, p.title, p.content, p.post_date, p.file, p.icon
     FROM post p
-    INNER JOIN "user" u ON p.id_user_id = u.id
     WHERE p.id_ue_id = :ueId
     ORDER BY p.post_date DESC
 ';
+
 
         $stmt = $conn->prepare($sql);
         $posts = $stmt->executeQuery(['ueId' => $id])->fetchAllAssociative();
