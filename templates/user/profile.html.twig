@@ -1,7 +1,7 @@
 {% include header %}
 
 <div class="form-container">
-    <h3 class="subtitle">Modifier mon profil</h3>
+    <h3 class="subtitle">Edit Profile</h3>
 
     <form class="reg-log-form" action="{{ path('app_profile') }}" method="post" enctype="multipart/form-data">
         <!-- Email -->
@@ -9,26 +9,25 @@
         <input id="email" name="email" type="email" value="{{ last_username }}" required autofocus />
 
         <!-- First Name -->
-        <label for="firstName">Prénom :</label>
+        <label for="firstName">First Name :</label>
         <input id="firstName" name="firstName" type="text" value="{{ user.firstName }}" required />
 
         <!-- Last Name -->
-        <label for="lastName">Nom :</label>
+        <label for="lastName">Last Name :</label>
         <input id="lastName" name="lastName" type="text" value="{{ user.lastName }}" required />
 
         <!-- Profile Image -->
-        <label for="image">Image de profil :</label>
+        <label for="image">Profile picture :</label>
         <input id="image" name="image" type="file" />
 
-        <!-- Password (optional) -->
-        <label for="password">Mot de passe :</label>
-        <input id="password" name="password" type="password" placeholder="Laissez vide si vous ne voulez pas changer le mot de passe" />
+        <label for="password">Password :</label>
+        <input id="password" name="password" type="password" placeholder="Leave empty if you don't want to change the password" />
 
 
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('profile_update') }}" />
 
-        <button type="submit" class="buttonlink submit-reg">Mettre à jour</button>
+        <button type="submit" class="buttonlink submit-reg">Update</button>
     </form>
 </div>
 
