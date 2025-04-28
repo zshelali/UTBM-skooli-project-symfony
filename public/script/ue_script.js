@@ -74,3 +74,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// Suppression d'UE (même principe que pour les utilisateurs)
+function deleteUeRow(ueId) {
+  if (confirm("Are you sure you want to delete this UE?")) {
+    fetch(`/admin/ue/${ueId}`, {
+      method: "DELETE"
+    })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error while deleting the UE.');
+          }
+          const button = document.querySelector(`button[onclick="deleteUeRow(${ueId})"]`);
+          if (button) {
+            const row = button.closest('tr');
+            if (row) {
+              row.remove();
+            }
+          }
+        })
+        .catch(error => {
+          alert('An error occurred: ' + error.message);
+        });
+  }
+}

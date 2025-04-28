@@ -35,4 +35,35 @@ final class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/user/{id}', name: 'admin_delete_user', methods: ['DELETE'])]
+    public function deleteUser(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+        if (!$user) {
+            return new Response('User not found', 404);
+        }
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        return new Response('User deleted successfully', 200);
+    }
+
+
+    #[Route('/admin/ue/{id}', name: 'admin_delete_ue', methods: ['DELETE'])]
+    public function deleteUe(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $ue = $entityManager->getRepository(UE::class)->find($id);
+
+        if (!$ue) {
+            return new Response('UE not found', 404);
+        }
+
+        $entityManager->remove($ue);
+        $entityManager->flush();
+
+        return new Response('UE deleted successfully', 200);
+    }
+
 }

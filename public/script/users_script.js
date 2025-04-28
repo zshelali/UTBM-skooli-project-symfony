@@ -10,8 +10,27 @@ function generateRandomPassword(length) {
   return result;
 }
 
-function deleteUserRow() {
-  confirm("Are you sure you want to delete this user ? \n(Will do nothing here, waiting for backend)");
+function deleteUserRow(userId) {
+  if (confirm("Are you sure you want to delete this user?")) {
+    fetch(`/admin/user/${userId}`, {
+      method: 'DELETE'
+    })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error while deleting the user.');
+          }
+          const button = document.querySelector(`button[onclick="deleteUserRow(${userId})"]`);
+          if (button) {
+            const row = button.closest('tr');
+            if (row) {
+              row.remove();
+            }
+          }
+        })
+        .catch(error => {
+          alert('An error occurred: ' + error.message);
+        });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
