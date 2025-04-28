@@ -1,24 +1,73 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const addPostBtn = document.querySelector('.add-post-btn-link');
-    const addPostModal = document.getElementById('addPostModal');
-    const closeModalBtn = document.querySelector('.close-post');
+document.querySelectorAll('.Actuality_options').forEach(button => {
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        const menu = this.nextElementSibling;
+        const isVisible = menu.style.display === 'block';
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+        menu.style.display = isVisible ? 'none' : 'block';
+    });
+});
 
-    if (addPostBtn && addPostModal && closeModalBtn) {
-        addPostBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            addPostModal.style.display = 'block';
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            addPostModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target === addPostModal) {
-                addPostModal.style.display = 'none';
-            }
-        });
-    } else {
-        console.error("One or more modal elements are missing in the DOM.");
+document.addEventListener('click', function (e) {
+    if (!e.target.closest('.Actuality_menu')) {
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
     }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    function initializePostEvents() {
+        const addPostBtn = document.querySelector('.add-post-btn-link');
+        if (addPostBtn) {
+            addPostBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('addPostModal').style.display = 'block';
+                document.getElementById('modal-title').innerText = 'Add post';
+                document.getElementById('modal-submit').innerText = 'Publier';
+                document.getElementById('addPostForm').action = "{{ path('post_add', { id: ue.id }) }}";
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+            });
+        }
+
+        document.querySelectorAll('.dropdown-menu a:first-child').forEach(editBtn => {
+            editBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('addPostModal').style.display = 'block';
+                document.getElementById('modal-title').innerText = 'Update post';
+                document.getElementById('modal-submit').innerText = 'Mettre à jour';
+            });
+        });
+
+        document.querySelectorAll('.edit-post').forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const title = this.getAttribute('data-title');
+                const content = this.getAttribute('data-content');
+                const id = this.getAttribute('data-id');
+                document.getElementById('postTitle').value = title;
+                document.getElementById('postContent').value = content;
+                document.getElementById('addPostForm').action = `/post/${id}/update`;
+                document.getElementById('modal-submit').textContent = 'Update';
+                document.getElementById('modal-title').textContent = 'Update post';
+                openPostModal();
+            });
+        });
+    }
+
+    function closePostModal() {
+        document.getElementById('addPostModal').style.display = 'none';
+    }
+
+    const closePostButton = document.querySelector('.close-post');
+    if (closePostButton) {
+        closePostButton.addEventListener('click', closePostModal);
+    }
+
+    document.querySelectorAll('#tabs a').forEach(tab => {
+        tab.addEventListener('click', function() {
+            setTimeout(initializePostEvents, 200);
+        });
+    });
+
+    initializePostEvents();
 });

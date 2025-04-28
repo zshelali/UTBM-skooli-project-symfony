@@ -1,0 +1,131 @@
+.assignation-list-container {
+  overflow-y: auto;
+  margin: 0 auto;
+  margin-top: 3vh;
+  padding: 1em;
+  border-radius: 20px;
+  width: 90%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-align: center;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.assignation-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.assignation-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+#assignation-add-btn,
+#assignation-remove-btn {
+  font-size: 15px;
+  width: 120px;
+  background-color: #d6d6d6;
+  border-radius: 12px;
+  padding: 10px;
+  transition: background-color 0.2s ease;
+}
+
+#assignation-add-btn:hover,
+#assignation-remove-btn:hover {
+  background-color: #d5302a;
+  color: white;
+}
+
+#assignationTable {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#assignationTable th,
+#assignationTable td {
+  padding: 15px 20px;
+  text-align: left;
+}
+
+#assignationTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: #423e3e;
+  border-radius: 8px 8px 0 0;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#assignationTable td {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30vh;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+#assignationTable tr:hover td {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#assignation-available-ues,
+#assignation-registered-ues {
+  width: 100%;
+}
+
+#assignation-available-ues td,
+#assignation-registered-ues td {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #cecdcd;
+  color: #231f1f;
+  margin-bottom: 5px;
+  transition: background-color 0.2s ease;
+}
+
+#assignation-available-ues td:hover,
+#assignation-registered-ues td:hover {
+  background-color: #e6e6e6;
+}
+
+/* Search input */
+#assignationSearchInput {
+  width: 500px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: #cecdcd;
+  color: #231f1f;
+  font-size: 14px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+  inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#assignationSearchInput:focus {
+  outline: none;
+  background-color: #e6e6e6;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+  inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#assignationSearchInput::placeholder {
+  color: #666;
+  opacity: 0.7;
+}

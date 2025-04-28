@@ -20,16 +20,27 @@
 
         <div class="separator"></div>
 
-        <div class="recent-posts">
-            <div class="recent-posts-header">
-                <h2>Publications récentes</h2>
-            </div>
-            <div id="posts-container">
-                <div>
-                    <p>Ici seront affichés les posts récents</p>
-                </div>
-            </div>
+        <div id="posts-container">
+            {% if recentPosts is not empty %}
+                {% for post in recentPosts %}
+                    <div class="recent-post">
+                        <h3>{{ post.title }} <small>({{ post.ue_code }})</small></h3>
+                        <p>
+                            {% if post.content|length > 100 %}
+                                {{ post.content|slice(0, 100) }}...
+                            {% else %}
+                                {{ post.content }}
+                            {% endif %}
+                        </p>
+                        <small>Publié le {{ post.post_date|date('d/m/Y H:i') }}</small>
+                    </div>
+
+                {% endfor %}
+            {% else %}
+                <p>Aucun post récent pour l'instant</p>
+            {% endif %}
         </div>
+
 
     </div>
 </div>

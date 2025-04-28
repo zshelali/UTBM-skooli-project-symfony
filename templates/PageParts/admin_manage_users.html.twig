@@ -4,6 +4,14 @@
 
 <h3 class="subtitle">Registered users.</h3>
 
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert flash-{{ label }} ">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endfor %}
+
 <div class="user-list-container">
     <div class="user-controls">
         <div class="search-container">
@@ -47,9 +55,9 @@
                         <button class="buttonlink edit-btn" data-user-id="{{ user.id }}">
                             <img src="{{ asset('images/edit.png') }}" alt="edit" class="edit-img">
                         </button>
-                        <button onclick="deleteUserRow({{ user.id }})" class="buttonlink del-btn">
-                            <img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img">
-                        </button>
+                        <form method="POST" action="{{ path('delete_user', {'id': user.id}) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <button type="submit" class="buttonlink del-btn"><img src="{{ asset('images/delete.png') }}" alt="delete" class="delete-img"></button>
+                        </form>
                     </div>
                 </td>
             </tr>
@@ -63,7 +71,7 @@
         <span class="close">&times;</span>
         <h3 id="user-modal-title">Edit User</h3>
         <div class="form-container">
-            <form class="reg-log-form" action="{{ path('add_user') }}" method="POST" enctype="multipart/form-data">
+            <form class="reg-log-form" id="user-form" method="POST" enctype="multipart/form-data">
                 <input type="hidden" id="user-index" name="user_index">
 
                 <label for="user-first-name">First name</label>
@@ -89,7 +97,7 @@
                 </div>
 
                 <label for="profile-picture">Profile Picture</label>
-                <input type="file" id="profile-picture" name="profile_picture">
+                <input type="file" id="profile-picture" name="user_input_illustration">
 
                 <button type="submit" id="user-modal-submit" class="buttonlink">Add / Update</button>
             </form>

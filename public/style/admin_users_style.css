@@ -301,6 +301,8 @@ textarea:focus {
 #user-modal-submit {
   color: #423e3e;
   background-color: #d6d6d6;
+  display: block;
+  margin: 20px auto;
 }
 
 .multiselect-container {

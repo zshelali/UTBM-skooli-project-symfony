@@ -4,6 +4,14 @@
 
 <h3 class="subtitle">Current UEs.</h3>
 
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert flash-{{ label }} ">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
 <div class="ue-list-container">
     <div class="user-controls">
         <div class="search-container">
@@ -72,7 +80,7 @@
                 <label for="ue-input-illustration">Upload an illustration</label>
                 <input type="file" id="ue-input-illustration" name="ue_input_illustration">
 
-                <button type="submit" id="ue-modal-submit" class="buttonlink">Update</button>
+                <button type="submit" id="ue-modal-submit" class="buttonlink">Add / Update</button>
             </form>
         </div>
     </div>
