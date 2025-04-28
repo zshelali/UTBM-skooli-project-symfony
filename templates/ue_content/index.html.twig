@@ -1,226 +1,25 @@
+<body>
 {% include header %}
 
 <div class="UE_name">
     <h1>{{ ue.code }} : {{ ue.name }}</h1>
 </div>
 
-{% if is_granted('ROLE_PROFESSOR') %}
-    <a href="#" class="add-post-btn-link">
-        <img class="add-post-btn" src="https://img.icons8.com/?size=50&id=11255&format=png" alt="Add post">
-    </a>
-{% endif %}
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Posts</a></li>
+        <li><a href="#tabs-2">Utilisateurs</a></li>
+    </ul>
 
-
-{% if posts is not empty %}
-    {# parcours les posts #}
-    {% for post in posts %}
-
-        {# Si le post est un post de texte #}
-        {% if post.file == null %}
-            <div class="Actuality_container_text">
-                <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
-                <h3 class="Actuality_title">{{ post.title }}</h3>
-                {% if post.icon == "important" %}
-                    <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-                         alt="double-exclamation-mark-emoji" />
-
-                {% elseif post.icon == "information" %}
-                    <img class="Actuality_icon" title="Information" width="30" height="30" src="https://img.icons8.com/fluency/30/information.png" alt="information" />
-                {% endif %}
-                {% if is_granted('ROLE_PROFESSOR') %}
-                    <div class="Actuality_menu">
-                        <a class="Actuality_options">&#8285;</a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="edit-post" data-id="{{ post.id }}" data-title="{{ post.title }}" data-content="{{ post.content }}">Modifier</a>
-                            <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
-                        </div>
-                    </div>
-                {% endif %}
-                <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
-                    {{ post.postDate|date('H\\hi \\l\\e d F') }}
-                </time>
-                <p class="text_paragraph">
-                    {{ post.content }}
-                </p>
-            </div>
-        {% elseif post.file != null %}
-            <div class="Actuality_container_file">
-                <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/material-outlined/24/upload-to-cloud.png"
-                     alt="upload-to-cloud"/>
-                <h3 class="Actuality_title">{{post.title}}</h3>
-                {% if post.icon == "important" %}
-                    <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-                         alt="double-exclamation-mark-emoji" />
-
-                {% elseif post.icon == "information" %}
-                    <img class="Actuality_icon" title="Information" width="30" height="30" src="https://img.icons8.com/fluency/30/information.png" alt="information" />
-                {% endif %}
-
-
-                {% if is_granted("ROLE_PROFESSOR") %}
-                    <div class="Actuality_menu">
-                        <a class="Actuality_options">&#8285;</a>
-                        <div class="dropdown-menu">
-                            <a href="#">Modifier</a>
-                            <a href="#" class="delete-post" data-id="{{ post.id }}">Supprimer</a>
-                        </div>
-                    </div>
-                {% endif%}
-
-                <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
-                    {{ post.postDate|date('H\\hi \\l\\e d F') }}
-                </time>
-
-                <p class="text_paragraph">{{post.content}}</p>
-
-                <div class="File_box">
-                    <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
-                    <a class="File_text" href="{{ asset('uploads/' ~ post.file) }}" download="{{ post.file }}">
-                        {{ post.file }}
-                    </a>
-                </div>
-            </div>
-        {% endif %}
-        <hr />
-    {% endfor %}
-
-{% else %}
-    {# s'il n'y a aucun post, on garde le modèle du faux post mais on change le texte #}
-    <div class="Actuality_container_text">
-        <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
-        <h3 class="Actuality_title">Pas de post disponible</h3>
-
-        <img class="Actuality_icon" title="! Important !" width="30" height="30"
-             src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png"
-             alt="double-exclamation-mark-emoji" />
-        <img class="Actuality_icon" title="Information" width="30" height="30"
-             src="https://img.icons8.com/fluency/30/information.png" alt="information" />
-
-        <div class="Actuality_menu">
-            <a class="Actuality_options">&#8285;</a>
-            <div class="dropdown-menu">
-                <a href="#">Modifier</a>
-                <a href="#" class="delete-post">Supprimer</a>
-            </div>
-        </div>
-
-        <time class="Actuality_time" datetime="{{ "now"|date('Y-m-d\\TH:i:s') }}">
-            {{ "now"|date('H\\hi \\l\\e d F') }}
-        </time>
-
-        <p class="text_paragraph">
-            Aucun post n'a encore été publié pour cette UE. Revenez plus tard ou ajoutez un post si vous êtes professeur !
-        </p>
+    <div id="tabs-1">
+        {% include 'ue_content/postUE.html.twig' %}
     </div>
 
-    <hr />
-{% endif %}
-
-<div id="addPostModal" class="modal">
-    <div class="modal-content">
-        <span class="close-post" onclick="closePostModal()">×</span>
-        <div class="post-form-box">
-            <h2 id="modal-title">Add post</h2>
-            <form id="addPostForm" method="POST" action="{{ path('post_add', { id: ue.id }) }}" enctype="multipart/form-data">
-                <label for="postTitle">Title</label>
-                <input type="text" id="postTitle" name="title" required />
-
-                <label for="postContent">Content</label>
-                <textarea id="postContent" name="content" rows="4" required></textarea>
-                    <label for="icon">Icon</label>
-                    <select name="icon" id="icon">
-                        <option value="">None</option>
-                        <option value="information">Information</option>
-                        <option value="important">Important</option>
-                    </select>
-                <div class="formGroup">
-                    <label for="file">Add file (optional) :</label>
-                    <input type="file" name="file" class="fileInput" />
-                </div>
-
-                <button type="submit" id="modal-submit">Publier</button>
-            </form>
-        </div>
+    <div id="tabs-2">
+        {% include 'ue_content/userUE.html.twig' %}
     </div>
 </div>
 
-<script>
-    document.querySelectorAll('.Actuality_options').forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            const menu = this.nextElementSibling;
-            const isVisible = menu.style.display === 'block';
-            document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
-            menu.style.display = isVisible ? 'none' : 'block';
-        });
-    });
-
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.Actuality_menu')) {
-            document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
-        }
-    });
-</script>
-<script>
-    // Ouvrir le modal pour "Ajouter un post"
-    document.querySelector('.add-post-btn-link').addEventListener('click', function (e) {
-        e.preventDefault();
-        document.getElementById('addPostModal').style.display = 'block';
-        document.getElementById('modal-title').innerText = 'Add post';
-        document.getElementById('modal-submit').innerText = 'Publier';
-        document.getElementById('addPostForm').action = "{{ path('post_add', { id: ue.id }) }}";
-
-        // reset le form
-        document.getElementById('postTitle').value = '';
-        document.getElementById('postContent').value = '';
-    });
-
-    // Ouvrir le modal pour "Modifier un post"
-    document.querySelectorAll('.dropdown-menu a:first-child').forEach(editBtn => {
-        editBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('addPostModal').style.display = 'block';
-            document.getElementById('modal-title').innerText = 'Update post';
-            document.getElementById('modal-submit').innerText = 'Mettre à jour';
-
-        });
-    });
-
-    // Fermer le modal
-    function closePostModal() {
-        document.getElementById('addPostModal').style.display = 'none';
-    }
-    // pour ouvrir en mode édition
-    document.querySelectorAll('.edit-post').forEach(button => {
-        button.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const title = this.getAttribute('data-title');
-                const content = this.getAttribute('data-content');
-                const id = this.getAttribute('data-id');
-
-                // remplir les champs
-                document.getElementById('postTitle').value = title;
-                document.getElementById('postContent').value = content;
-
-                // changer l'action du formulaire pour UPDATE
-                document.getElementById('addPostForm').action = `/post/${id}/update`;
-
-                // changer le texte du bouton
-                document.getElementById('modal-submit').textContent = 'Update';
-
-                // changer le titre du modal
-                document.getElementById('modal-title').textContent = 'Update post';
-
-                // ouvrir le modal
-                openPostModal();
-
-
-        });
-    });
-
-
-</script>
-
 
 {% include footer %}
+</body>

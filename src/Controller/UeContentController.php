@@ -30,18 +30,22 @@ final class UeContentController extends AbstractController
             throw $this->createNotFoundException('UE non trouvée.');
         }
 
-        $posts = $postRepository->findBy(['id_ue' => $ue],['post_date' => 'DESC']);
+        $posts = $postRepository->findBy(['id_ue' => $ue], ['post_date' => 'DESC']);
 
+        $users = $ue->getUsers();
         return $this->render('ue_content/index.html.twig', [
-            'styles' => ['UE_page_style', 'UE_prof'],
+            'styles' => ['UE_page_style', 'UE_prof', 'index_style'],
             'scripts' => ['AddPost_script'],
             'header' => 'PageParts/header.html.twig',
             'footer' => 'PageParts/footer.html.twig',
             'currentPage' => 'ue_content',
             'ue' => $ue,
             'posts' => $posts,
+            'users' => $users,
         ]);
     }
+
+
 
     #[Route('/post/add/{id}', name: 'post_add')]
     public function addPost(Request $request, EntityManagerInterface $em, UE $ue): Response

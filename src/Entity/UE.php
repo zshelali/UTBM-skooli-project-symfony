@@ -298,4 +298,13 @@ class UE
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->getIdUser();
+    }
+
 }

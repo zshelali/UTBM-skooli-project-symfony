@@ -1,0 +1,27 @@
+
+<div id="tabs-2" class="tab-content">
+    {% if users is not empty %}
+        <h2>Liste des utilisateurs</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Rôle</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.roles|join(', ') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun utilisateur trouvé pour cette UE.</p>
+    {% endif %}
+</div>
+
