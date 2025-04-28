@@ -22,16 +22,24 @@ final class UeContentController extends AbstractController
     }
 
     #[Route('/ue/content/{id}', name: 'ue_content')]
-    public function index(int $id, UERepository $ueRepository, PostRepository $postRepository): Response
+    public function index(int $id, UERepository $ueRepository, EntityManagerInterface $em): Response
     {
         $ue = $ueRepository->find($id);
 
         if (!$ue) {
             throw $this->createNotFoundException('UE non trouvée.');
         }
+        $conn = $em->getConnection();
+        $sql = '
+    SELECT p.id, p.title, p.content, p.post_date, p.file, p.icon, u.first_name, u.last_name
+    FROM post p
+    INNER JOIN "user" u ON p.id_user_id = u.id
+    WHERE p.id_ue_id = :ueId
+    ORDER BY p.post_date DESC
+';
 
-        $posts = $postRepository->findBy(['id_ue' => $ue], ['post_date' => 'DESC']);
-
+        $stmt = $conn->prepare($sql);
+        $posts = $stmt->executeQuery(['ueId' => $id])->fetchAllAssociative();
         $users = $ue->getUsers();
         return $this->render('ue_content/index.html.twig', [
             'styles' => ['UE_page_style', 'UE_prof', 'index_style'],

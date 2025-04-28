@@ -28,8 +28,8 @@
                             </div>
                         </div>
                     {% endif %}
-                    <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
-                        {{ post.postDate|date('H\\hi \\l\\e d F') }}
+                    <time class="Actuality_time" datetime="{{ post.post_date|date('Y-m-d\\TH:i:s') }}">
+                        {{ post.post_date|date('H\\hi \\l\\e d F') }}
                     </time>
                     <p class="text_paragraph">
                         {{ post.content }}
@@ -53,8 +53,8 @@
                             </div>
                         </div>
                     {% endif %}
-                    <time class="Actuality_time" datetime="{{ post.postDate|date('Y-m-d\\TH:i:s') }}">
-                        {{ post.postDate|date('H\\hi \\l\\e d F') }}
+                    <time class="Actuality_time" datetime="{{ post.post_date|date('Y-m-d\\TH:i:s') }}">
+                        {{ post.post_date|date('H\\hi \\l\\e d F') }}
                     </time>
                     <p class="text_paragraph">{{post.content}}</p>
                     <div class="File_box">
