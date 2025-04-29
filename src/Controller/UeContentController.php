@@ -111,9 +111,11 @@ final class UeContentController extends AbstractController
 
         $title = $request->request->get('title');
         $content = $request->request->get('content');
+        $icon = $request->request->get('icon');
 
         $post->setTitle($title);
         $post->setContent($content);
+        $post->setIcon($icon);
 
         $entityManager->flush();
 

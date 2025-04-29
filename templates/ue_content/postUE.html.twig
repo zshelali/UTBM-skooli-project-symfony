@@ -29,7 +29,7 @@
                         </div>
                     {% endif %}
                     <time class="Actuality_time" datetime="{{ post.post_date|date('Y-m-d\\TH:i:s') }}">
-                        {{ post.post_date|date('H\\hi \\l\\e d F') }}
+                        {{ post.post_date|date('H\\hi \\t\\h\\e d F') }}
                     </time>
                     <p class="text_paragraph">
                         {{ post.content }}
@@ -48,13 +48,13 @@
                         <div class="Actuality_menu">
                             <a class="Actuality_options">&#8285;</a>
                             <div class="dropdown-menu">
-                                <a href="#">Modifier</a>
-                                <a href="#" class="delete-post" data-id="{{ post.id }}">Supprimer</a>
+                                <a href="#" class="edit-post" data-id="{{ post.id }}" data-title="{{ post.title }}" data-content="{{ post.content }}">Modifier</a>
+                                <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
                             </div>
                         </div>
                     {% endif %}
                     <time class="Actuality_time" datetime="{{ post.post_date|date('Y-m-d\\TH:i:s') }}">
-                        {{ post.post_date|date('H\\hi \\l\\e d F') }}
+                        {{ post.post_date|date('H\\hi \\t\\h\\e d F') }}
                     </time>
                     <p class="text_paragraph">{{post.content}}</p>
                     <div class="File_box">
