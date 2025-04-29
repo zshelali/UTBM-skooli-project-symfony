@@ -2,7 +2,7 @@
 {% set scripts = ['assignation_script'] %}
 {% include 'PageParts/parts_header.html.twig' %}
 
-<h3 class="subtitle">Assign UEs to students or Professors</h3>
+<h3 class="subtitle">Assign UEs to Students or Professors.</h3>
 
 {% for label, messages in app.flashes %}
     {% for message in messages %}
@@ -16,7 +16,7 @@
 <div class="assignation-list-container">
     <div class="assignation-controls">
         <div class="user-search-container">
-            <input type="text" id="assignationUserSearchInput" placeholder="Search for students. (BETA)">
+            <input type="text" id="assignationUserSearchInput" placeholder="Search for students or professors. (BETA)">
         </div>
         <div class="ue-search-container">
             <input type="text" id="assignationUESearchInput" placeholder="Search for UEs. (BETA)">
@@ -35,12 +35,14 @@
             </thead>
             <tbody id="assignation-user-list">
             {% for user in users %}
-                <tr class="assignation-user-rows">
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.firstName }}</td>
-                    <td>{{ user.lastName }}</td>
-                    <td> {{ user.idRole.name }}</td>
-                </tr>
+                {% if user.idRole.name in ['student', 'professor', 'profadmin'] %}
+                    <tr class="assignation-user-rows">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td> {{ user.idRole.name }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
