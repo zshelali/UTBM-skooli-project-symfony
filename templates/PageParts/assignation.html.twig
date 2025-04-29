@@ -2,7 +2,7 @@
 {% set scripts = ['assignation_script'] %}
 {% include 'PageParts/parts_header.html.twig' %}
 
-<h3 class="subtitle">Assign UEs to students</h3>
+<h3 class="subtitle">Assign UEs to students or Professors</h3>
 
 {% for label, messages in app.flashes %}
     {% for message in messages %}
@@ -12,13 +12,39 @@
     {% endfor %}
 {% endfor %}
 
+
 <div class="assignation-list-container">
     <div class="assignation-controls">
-        <div class="search-container">
-            <input type="text" id="assignationSearchInput" placeholder="Search for students or UEs. (BETA)">
+        <div class="user-search-container">
+            <input type="text" id="assignationUserSearchInput" placeholder="Search for students. (BETA)">
+        </div>
+        <div class="ue-search-container">
+            <input type="text" id="assignationUESearchInput" placeholder="Search for UEs. (BETA)">
         </div>
     </div>
 
+    <div id="assignation-user-container">
+        <table id="assignation-user-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+            <tbody id="assignation-user-list">
+            {% for user in users %}
+                <tr class="assignation-user-rows">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td> {{ user.idRole.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     <table id="assignationTable">
         <thead>
         <tr>
@@ -31,8 +57,8 @@
             <td>
                 <table id="assignation-available-ues">
                     {% for ue in ues %}
-                        <tr>
-                            <td onclick="selectAssignationCourse(this)">{{ ue.code }}</td>
+                        <tr class="assignation-ue-row">
+                            <td>{{ ue.code }}</td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -47,8 +73,11 @@
     </table>
 
     <div class="assignation-buttons">
-        <button class="buttonlink" id="assignation-add-btn" onclick="addAssignationCourse()">+ Add</button>
-        <button class="buttonlink" id="assignation-remove-btn" onclick="removeAssignationCourse()">− Remove</button>
+        <button class="buttonlink" id="assignation-add-btn">Add</button>
+        <button class="buttonlink" id="assignation-remove-btn">Remove</button>
+    </div>
+    <div class="confirm-button-container">
+        <button class="buttonlink" id="assignation-confirm-btn">Confirm</button>
     </div>
 </div>
 
