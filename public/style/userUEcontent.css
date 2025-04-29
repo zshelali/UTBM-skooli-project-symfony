@@ -1,0 +1,66 @@
+.user-tables-wrapper {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.user-table-section {
+    flex: 1 1 45%;
+    max-width: 45%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1em;
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    text-align: center;
+    max-height: 60vh; /* Control max height */
+    display: flex;
+    flex-direction: column;
+}
+
+.user-table-scroll {
+    overflow-y: auto;
+    flex: 1;
+    margin-top: 1em;
+}
+
+/* Same styles for both tables */
+.user-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.user-table th,
+.user-table td {
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 13px;
+}
+
+.user-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40vh;
+}
+
+.user-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #423e3e;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.user-table tr:not(:last-child) td {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.user-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
