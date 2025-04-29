@@ -112,10 +112,18 @@ final class UeContentController extends AbstractController
         $title = $request->request->get('title');
         $content = $request->request->get('content');
         $icon = $request->request->get('icon');
+        $file = $request->files->get('file');
 
         $post->setTitle($title);
         $post->setContent($content);
         $post->setIcon($icon);
+
+        if ($file) {
+            $filename = uniqid().'.'.$file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir') . '/public/uploads', $filename);
+            $post->setFile($filename);
+        }
+
 
         $entityManager->flush();
 
