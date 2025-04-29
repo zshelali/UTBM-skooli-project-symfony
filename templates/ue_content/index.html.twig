@@ -100,9 +100,11 @@
                     e.preventDefault();
                     const title = this.getAttribute('data-title');
                     const content = this.getAttribute('data-content');
+                    const icon = this.getAttribute('data-icon');
                     const id = this.getAttribute('data-id');
                     document.getElementById('postTitle').value = title;
                     document.getElementById('postContent').value = content;
+                    document.getElementById('icon').value = icon;
                     document.getElementById('addPostForm').action = `/post/${id}/update`;
                     document.getElementById('modal-submit').textContent = 'Update';
                     document.getElementById('modal-title').textContent = 'Update post';
