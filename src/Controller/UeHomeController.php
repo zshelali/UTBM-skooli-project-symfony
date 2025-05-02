@@ -15,7 +15,6 @@ final class UeHomeController extends AbstractController
     #[Route('/ue/home_page', name: 'ue_home')]
     public function index(
         UERepository $ueRepository,
-        PostRepository $postRepository,
         Security $security,
         ManagerRegistry $doctrine
     ): Response
@@ -51,10 +50,10 @@ final class UeHomeController extends AbstractController
 
         $ues = $ueRepository->findAll();
 
-        $sql = "SELECT * FROM ue 
+        $sql = "SELECT ue.code, ue.illustration, ue.id FROM ue 
         JOIN ue_user ON ue.id = ue_user.ue_id 
         INNER JOIN \"user\" ON ue_user.user_id = \"user\".id 
-        WHERE \"user\".id = :id";
+            WHERE \"user\".id = :id";
         $stmt2 = $connection->executeQuery($sql, ['id' => $user->getId()]);
         $ues_specific = $stmt2->fetchAllAssociative();
 
