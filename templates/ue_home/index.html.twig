@@ -5,34 +5,66 @@
 <div class="content-wrapper">
     <div class="ueGrid">
 
-        {% for ue in ues %}
-            <div class="ueGridBox{{ loop.index }} ueBox">
-                <a href="{{ path('ue_content', {'id': ue.id}) }}">
-                <h4>{{ ue.code }}</h4>
-                    {% if ue.illustration %}
-                        <img src="{{ asset('uploads/ue_images/' ~ ue.illustration) }}" alt="{{ ue.code }}">
-                    {% else %}
-                        <img src="{{ asset('images/default_ue.png') }}" alt="Default Image">
-                    {% endif %}
-                </a>
-            </div>
-        {% endfor %}
+        {% if is_granted('ROLE_PROFADMIN') %}
+            {% for ue in ues %}
+                <div class="ueGridBox{{ loop.index }} ueBox">
+                    <a href="{{ path('ue_content', {'id': ue.id}) }}">
+                        <h4>{{ ue.code }}</h4>
+                        {% if ue.illustration %}
+                            <img src="{{ asset('uploads/ue_images/' ~ ue.illustration) }}" alt="{{ ue.code }}">
+                        {% else %}
+                            <img src="{{ asset('images/default_ue.png') }}" alt="Default Image">
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% for ue in ues_specific %}
+                <div class="ueGridBox{{ loop.index }} ueBox">
+                    <a href="{{ path('ue_content', {'id': ue.id}) }}">
+                        <h4>{{ ue.code }}</h4>
+                        {% if ue.illustration %}
+                            <img src="{{ asset('uploads/ue_images/' ~ ue.illustration) }}" alt="{{ ue.code }}">
+                        {% else %}
+                            <img src="{{ asset('images/default_ue.png') }}" alt="Default Image">
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+
 
         <div class="separator"></div>
 
         <div id="posts-container">
-            {% if recentPosts is not empty %}
-                <ul>
-                    {% for post in recentPosts %}
-                        <li>
-                            {{ post.first_name|default('Un utilisateur') }} {{ post.lastname|default('') }}
-                            a posté
-                            « {{ post.title }} » dans {{ post.ue_code }}
-                        </li>
-                    {% endfor %}
-                </ul>
+            {% if is_granted('ROLE_PROFADMIN') %}
+                {% if recentPosts is not empty %}
+                    <ul>
+                        {% for post in recentPosts %}
+                            <li>
+                                {{ post.first_name|default('Un utilisateur') }} {{ post.lastname|default('') }}
+                                a posté
+                                « {{ post.title }} » dans {{ post.ue_code }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Aucun post récent pour l'instant</p>
+                {% endif %}
             {% else %}
-                <p>Aucun post récent pour l'instant</p>
+                {% if recentPosts_specific is not empty %}
+                    <ul>
+                        {% for post in recentPosts_specific %}
+                            <li>
+                                {{ post.first_name|default('Un utilisateur') }} {{ post.lastname|default('') }}
+                                a posté
+                                « {{ post.title }} » dans {{ post.ue_code }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Aucun post récent pour l'instant</p>
+                {% endif %}
             {% endif %}
         </div>
 

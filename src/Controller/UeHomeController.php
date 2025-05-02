@@ -20,7 +20,7 @@ final class UeHomeController extends AbstractController
         ManagerRegistry $doctrine
     ): Response
     {
-        $ues = $ueRepository->findAll();
+
         $user = $security->getUser(); // récupère l'utilisateur connecté
 
         // requête SQL
@@ -34,12 +34,32 @@ final class UeHomeController extends AbstractController
             ORDER BY p.post_date DESC
             LIMIT 5
         ";
+        $stmt = $connection->executeQuery($sql, ['id' => $user->getId()]);
+        $recentPosts_all = $stmt->fetchAllAssociative();
+
+
+        $sql = " SELECT p.id, p.title, p.content, p.post_date, u.code AS ue_code, us.first_name, us.last_name
+        FROM post p 
+        INNER JOIN ue u ON p.id_ue_id = u.id 
+        INNER JOIN \"ue_user\" ueus ON u.id = ueus.ue_id
+        INNER JOIN \"user\" us ON p.id_user_id = us.id
+        WHERE ueus.user_id = :id 
+        ORDER BY p.post_date DESC 
+        LIMIT 5";
+        $stmt = $connection->executeQuery($sql, ['id' => $user->getId()]);
+        $recentPosts_specific = $stmt->fetchAllAssociative();
+
+        $ues = $ueRepository->findAll();
+
+        $sql = "SELECT * FROM ue 
+        JOIN ue_user ON ue.id = ue_user.ue_id 
+        INNER JOIN \"user\" ON ue_user.user_id = \"user\".id 
+        WHERE \"user\".id = :id";
+        $stmt2 = $connection->executeQuery($sql, ['id' => $user->getId()]);
+        $ues_specific = $stmt2->fetchAllAssociative();
 
 
 
-
-        $stmt = $connection->executeQuery($sql);
-        $recentPosts = $stmt->fetchAllAssociative();
 
         return $this->render('ue_home/index.html.twig', [
             'styles' => ['ue_home_style'],
@@ -48,7 +68,9 @@ final class UeHomeController extends AbstractController
             'currentPage' => 'ue_home',
             'ues' => $ues,
             'user' => $user,
-            'recentPosts' => $recentPosts,
+            'recentPosts' => $recentPosts_all,
+            'ues_specific' => $ues_specific,
+            'recentPosts_specific' => $recentPosts_specific,
         ]);
     }
 }
