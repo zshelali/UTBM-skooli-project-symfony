@@ -47,12 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
-    setupUESearch(); // refresh search behavior after modifying rows
+    setupUESearch(); // refresh search behavior
 
     // USER SELECTION ------------------------------------------------------------------------
     const userRows = assignationTab.querySelectorAll(".assignation-user-rows");
     let userSelectionLocked = false;
-    let ueSelectionLocked = true; // Lock UE selection when no users selected
+    let ueSelectionLocked = true;
     const selectedUserIds = new Set();
 
     userRows.forEach(row => {
@@ -115,9 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const ueRows = assignationTab.querySelectorAll("#assignation-available-ues tr, #assignation-registered-ues tr");
 
         ueRows.forEach(row => {
-            // Replace with fresh clone to clear any old listeners
             const newRow = row.cloneNode(true);
-            newRow.style.display = ""; // always show it
+            newRow.style.display = "";
             row.replaceWith(newRow);
 
             newRow.addEventListener("click", () => {
@@ -141,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-// Call it initially
     setupUeSelection();
     setupUESearch();
     const selectedUeCodes = new Set();
@@ -158,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        userSelectionLocked = true; // lock user selection
+        userSelectionLocked = true;
 
         selectedUeCodes.forEach(ueCode => {
             const ueRow = Array.from(availableUeTable.querySelectorAll("tr")).find(row =>
@@ -171,9 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const clone = ueRow.cloneNode(true);
                 clone.classList.remove("selected");
                 clone.classList.add("pending-ue");
-                clone.style.display = ""; // ensure visible
+                clone.style.display = ""; e
                 registeredUeTable.appendChild(clone);
-                ueRow.remove(); // remove original from available
+                ueRow.remove();
             }
         });
 

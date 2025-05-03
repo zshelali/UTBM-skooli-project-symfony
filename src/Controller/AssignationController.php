@@ -96,7 +96,7 @@ class AssignationController extends AbstractController
         JOIN ue_user ON ue.id = ue_user.ue_id
         WHERE ue_user.user_id = :userId
     SQL;
-
+        // récupère les codes UE assignés à l’utilisateur
         $assignedUes = $connection->fetchFirstColumn($sql, ['userId' => $userId]);
 
         return new JsonResponse(['status' => 'success', 'assignedUes' => $assignedUes]);

@@ -26,7 +26,6 @@
         const tabs = document.querySelectorAll("#tabs ul li a");
         const contents = document.querySelectorAll("#tabs > div");
 
-        // Masquer tous les contenus sauf le premier au début
         contents.forEach((content, index) => {
             content.style.display = index === 0 ? "block" : "none";
         });
@@ -34,10 +33,8 @@
         // Ajouter un événement de clic à chaque onglet
         tabs.forEach(tab => {
             tab.addEventListener("click", function (e) {
-                // Empêcher le comportement par défaut du lien
                 e.preventDefault();
 
-                // Obtenir l'attribut href pour savoir quel onglet afficher
                 const targetId = this.getAttribute("href");
 
                 // Masquer tous les contenus
@@ -51,12 +48,11 @@
                     targetContent.style.display = "block";
                 }
 
-                // Réinitialiser les événements après le changement de tab (pour les dropdowns et boutons)
+                // Réinitialiser les événements après le changement de tab
                 initializePostEvents();
             });
         });
 
-        // Initialiser les événements pour les boutons et le dropdown
         function initializePostEvents() {
             const addPostBtn = document.querySelector('.add-post-btn-link');
             if (addPostBtn) {
@@ -113,7 +109,6 @@
                 });
             });
 
-            // Ajouter l'événement pour fermer le modal
             const closePostButton = document.querySelector('.close-post');
             if (closePostButton) {
                 closePostButton.addEventListener('click', function () {

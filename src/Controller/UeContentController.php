@@ -29,6 +29,7 @@ final class UeContentController extends AbstractController
         if (!$ue) {
             throw $this->createNotFoundException('UE non trouvée.');
         }
+        // récupère les posts de l’UE par date décroissante
         $conn = $em->getConnection();
         $sql = '
     SELECT p.id, p.title, p.content, p.post_date, p.file, p.icon
@@ -39,6 +40,7 @@ final class UeContentController extends AbstractController
 
 
         $stmt = $conn->prepare($sql);
+        // récupére tous les posts de cette UE
         $posts = $stmt->executeQuery(['ueId' => $id])->fetchAllAssociative();
         $users = $ue->getUsers();
         return $this->render('ue_content/index.html.twig', [
@@ -66,11 +68,13 @@ final class UeContentController extends AbstractController
         $icon = $request->request->get('icon');
         $file = $request->files->get('file');
 
+        // Assigne les données du formulaire au post
         $post->setTitle($title);
         $post->setContent($content);
         $post->setIcon($icon);
 
         if ($file) {
+            // génère un nom unique pour le fichier uploadé
             $filename = uniqid().'.'.$file->guessExtension();
             $file->move($this->getParameter('kernel.project_dir') . '/public/uploads', $filename);
             $post->setFile($filename);
@@ -119,6 +123,7 @@ final class UeContentController extends AbstractController
         $post->setIcon($icon);
 
         if ($file) {
+            // remplace le fichier s’il y en a un nouveau
             $filename = uniqid().'.'.$file->guessExtension();
             $file->move($this->getParameter('kernel.project_dir') . '/public/uploads', $filename);
             $post->setFile($filename);

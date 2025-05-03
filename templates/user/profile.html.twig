@@ -4,19 +4,15 @@
     <h3 class="subtitle">Edit Profile</h3>
 
     <form class="reg-log-form" action="{{ path('app_profile') }}" method="post" enctype="multipart/form-data">
-        <!-- Email -->
         <label for="email">Email :</label>
         <input id="email" name="email" type="email" value="{{ last_username }}" required autofocus />
 
-        <!-- First Name -->
         <label for="firstName">First Name :</label>
         <input id="firstName" name="firstName" type="text" value="{{ user.firstName }}" required />
 
-        <!-- Last Name -->
         <label for="lastName">Last Name :</label>
         <input id="lastName" name="lastName" type="text" value="{{ user.lastName }}" required />
 
-        <!-- Profile Image -->
         <label for="image">Profile picture :</label>
         <input id="image" name="image" type="file" />
 

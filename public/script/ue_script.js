@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const ueDesc = cells[3].textContent.trim();
       const ueCredits = cells[4].textContent.trim();
 
-      ueForm.action = `/admin/update-ue/${ueId}`; // dynamique
+      ueForm.action = `/admin/update-ue/${ueId}`;
       ueForm.querySelector("#ue-code").value = ueCode;
       ueForm.querySelector("#ue-name").value = ueName;
       ueForm.querySelector("#ue-description").value = ueDesc;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = ueTab.querySelector(".add-btn");
   if (addBtn) {
     addBtn.addEventListener("click", () => {
-      ueForm.action = "/admin/add-ue"; // statique
+      ueForm.action = "/admin/add-ue";
       ueForm.querySelector("#ue-code").value = '';
       ueForm.querySelector("#ue-name").value = '';
       ueForm.querySelector("#ue-description").value = '';

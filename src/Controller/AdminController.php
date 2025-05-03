@@ -16,6 +16,7 @@ final class AdminController extends AbstractController
     #[Route('/admin', name: 'admin_home')]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        // récupère les données
         $ues = $entityManager->getRepository(UE::class)->findAll();
         $users = $entityManager->getRepository(User::class)->findAll();
         $roles = $entityManager->getRepository(Role::class)->findAll();
@@ -39,6 +40,7 @@ final class AdminController extends AbstractController
     #[Route('/admin/user/{id}', name: 'admin_delete_user', methods: ['DELETE'])]
     public function deleteUser(int $id, EntityManagerInterface $entityManager): Response
     {
+        // check si user existe
         $user = $entityManager->getRepository(User::class)->find($id);
 
         if (!$user) {
@@ -55,6 +57,7 @@ final class AdminController extends AbstractController
     #[Route('/admin/ue/{id}', name: 'admin_delete_ue', methods: ['DELETE'])]
     public function deleteUe(int $id, EntityManagerInterface $entityManager): Response
     {
+        // check si ue existe
         $ue = $entityManager->getRepository(UE::class)->find($id);
 
         if (!$ue) {

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Doctrine\ORM\EntityManagerInterface; // Ajout de l'import pour EntityManagerInterface
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserProfileController extends AbstractController
 {
@@ -21,7 +21,6 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // Handling the form submission
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $firstName = $request->request->get('firstName');
@@ -29,28 +28,25 @@ class UserProfileController extends AbstractController
             $password = $request->request->get('password');
             $image = $request->files->get('image');
 
-            // Update email, first name, and last name
+            // met à jour
             $user->setEmail($email);
             $user->setFirstName($firstName);
             $user->setLastName($lastName);
 
-            // If a new password is provided, hash and update it
+            // Si un nouveau mot de passe est entré, le hasher et le sauvegarder
             if (!empty($password)) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $password);
                 $user->setPassword($hashedPassword);
             }
 
-            // Handle image upload (if provided)
             if ($image) {
-                // Save image logic here (e.g., upload to a directory and set the path in the user)
+                // Génère un nom unique pour l'image
                 $imageName = uniqid() . '.' . $image->guessExtension();
                 $image->move($this->getParameter('profile_images_directory'), $imageName);
-                $user->setImage($imageName); // Assuming you have an 'image' field in your User entity
+                $user->setImage($imageName);
             }
 
-            // Save the updated user
-            $entityManager->flush(); // Utilisation de l'entityManager injecté
-
+            $entityManager->flush();
             $this->addFlash('success', 'Votre profil a été mis à jour avec succès.');
 
             return $this->redirectToRoute('app_profile');

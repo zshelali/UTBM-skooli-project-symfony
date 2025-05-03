@@ -56,7 +56,6 @@ class UserController extends AbstractController
         }
 
 
-        // Sauvegarde en base de données
         $entityManager->persist($user);
         $entityManager->flush();
 

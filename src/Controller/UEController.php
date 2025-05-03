@@ -17,16 +17,16 @@ class UEController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
-        // Récupération des données du formulaire
-        $ueCode = $request->request->get('ue_code');  // Récupérer le code
+        // Récupération données du formulaire
+        $ueCode = $request->request->get('ue_code');
         $ueName = $request->request->get('ue_name');
         $ueDescription = $request->request->get('ue_description');
         $ueCredits = (int)$request->request->get('ue_credits');
         $imageFile = $request->files->get('ue_input_illustration');
 
-        // Création de la nouvelle UE
+        // Création de nouvelle UE
         $ue = new UE();
-        $ue->setCode($ueCode);  // Assigner le code
+        $ue->setCode($ueCode);
         $ue->setName($ueName);
         $ue->setDescription($ueDescription);
         $ue->setCredits($ueCredits);
@@ -38,7 +38,6 @@ class UEController extends AbstractController
             $ue->setIllustration($newFilename);
         }
 
-        // Sauvegarde en base de données
         $entityManager->persist($ue);
         $entityManager->flush();
 

@@ -20,10 +20,10 @@ final class UeHomeController extends AbstractController
     ): Response
     {
 
-        $user = $security->getUser(); // récupère l'utilisateur connecté
+        $user = $security->getUser();
 
-        // requête SQL
         $connection = $doctrine->getConnection();
+        // Récupère les 5 derniers postes de toutes UEs
         $sql = "
             SELECT p.id, p.title, p.content, p.post_date, u.code AS ue_code, 
                     u2.first_name, u2.last_name
@@ -50,6 +50,7 @@ final class UeHomeController extends AbstractController
 
         $ues = $ueRepository->findAll();
 
+        // Récupère les UE auxquelles cet utilisateur est inscrit
         $sql = "SELECT ue.code, ue.illustration, ue.id FROM ue 
         JOIN ue_user ON ue.id = ue_user.ue_id 
         INNER JOIN \"user\" ON ue_user.user_id = \"user\".id 
