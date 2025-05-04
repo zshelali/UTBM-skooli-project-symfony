@@ -1,5 +1,5 @@
 function toggleShowPassword() {
-    var x = document.getElementById("login-password");
+    let x = document.getElementById("password");
     if (x.type === "password") {
       x.type = "text";
     } else {

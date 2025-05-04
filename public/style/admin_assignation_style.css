@@ -1,0 +1,166 @@
+.subtitle {
+    margin: 50px;
+}
+
+.assignation-list-container {
+    overflow: auto;
+    margin: 0 auto;
+    margin-top: 3vh;
+    padding: 1em;
+    border-radius: 20px;
+    width: 90%;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-align: center;
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+}
+
+.assignation-list-container table {
+    width: 100%;
+    margin: -1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.assignation-list-container th,
+.assignation-list-container td {
+    padding: 15px 20px;
+    text-align: left;
+}
+
+.assignation-list-container td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40vh;
+}
+
+.assignation-list-container th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #423e3e;
+    border-radius: 8px 8px 0 0;
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.assignation-list-container tr td{
+    border-bottom: 1px solid #e0e0e0;
+}
+
+
+.assignation-list-container tr {
+    height: 60px;
+}
+
+.assignation-list-container td {
+    font-size: 13px;
+}
+
+#assignation-add-btn,
+#assignation-remove-btn
+{
+    font-size: 15px;
+    width: 100px;
+    margin-top: 30px;
+
+}
+
+#assignation-add-btn {
+    background-color: green;
+    color: white;
+}
+
+#assignation-remove-btn {
+    color: white;
+    background-color: red;
+}
+
+#assignation-add-btn:hover {
+    background-color: darkgreen;
+}
+
+#assignation-remove-btn:hover {
+    background-color: darkred;
+}
+
+
+.search-container {
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+#assignationSearchInput {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: #cecdcd;
+    color: #231f1f;
+    font-size: 14px;
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#assignationSearchInput:focus {
+    outline: none;
+    background-color: #e6e6e6;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#assignationSearchInput::placeholder {
+    color: #666;
+    opacity: 0.7;
+}
+
+#assignation-user-table,
+#assignation-user-table td{
+    width: 30px;
+    font-size: 11px;
+}
+
+#assignation-user-container {
+    margin-bottom: 50px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*ASSIGNATION MECHANISM*/
+
+.assignation-user-rows.selected {
+    background-color: #d5302a;
+    color: white;
+    font-weight: bold;
+}
+
+.assignation-ue-row.selected {
+    background-color: #d5302a;
+    color: white;
+    font-weight: bold;
+}
+
+.pending-ue {
+    color: #d5302a;
+    font-weight: bold;
+}
+
+/*Confir button*/
+
+.confirm-button-container {
+    margin: 30px;
+}
+
+#assignation-confirm-btn {
+    background-color: deepskyblue;
+}
+
+#assignation-confirm-btn:hover {
+    background-color: #026e8d;
+}

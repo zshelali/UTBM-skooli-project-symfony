@@ -77,3 +77,26 @@ textarea:focus {
   margin: 0 auto;
   margin-top: 30px;
 }
+
+.alert {
+  width: 80%;
+  max-width: 420px;
+  margin: 2vh auto;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d5302a;
+  font-weight: bold;
+  background-color: rgba(213, 48, 42, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(213, 48, 42, 0.3);
+  font-size: 15px;
+  text-align: center;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow:
+          0 4px 6px rgba(0, 0, 0, 0.05),
+          0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease;
+}

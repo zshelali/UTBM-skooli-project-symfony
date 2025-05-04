@@ -166,6 +166,7 @@ textarea:focus {
 
 
 .ue-list-container {
+  overflow: auto;
   margin: 0 auto;
   margin-top: 3vh;
   padding: 1em;
@@ -188,6 +189,13 @@ textarea:focus {
 .ue-list-container td {
   padding: 15px 20px;
   text-align: left;
+}
+
+.ue-list-container td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40vh;
 }
 
 .ue-list-container th {
@@ -263,4 +271,5 @@ textarea:focus {
   color: #666;
   opacity: 0.7;
 }
+
 
