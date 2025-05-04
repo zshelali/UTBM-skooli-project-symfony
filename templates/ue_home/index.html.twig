@@ -5,7 +5,7 @@
 <div class="content-wrapper">
     <div class="ueGrid">
 
-        {% if is_granted('ROLE_PROFADMIN') %}
+        {% if is_granted('ROLE_MODO') %}
             {% for ue in ues %}
                 <div class="ueGridBox{{ loop.index }} ueBox">
                     <a href="{{ path('ue_content', {'id': ue.id}) }}">
@@ -37,7 +37,7 @@
         <div class="separator"></div>
 
         <div id="posts-container">
-            {% if is_granted('ROLE_PROFADMIN') %}
+            {% if is_granted('ROLE_MODO') %}
                 {% if recentPosts is not empty %}
                     <ul>
                         {% for post in recentPosts %}
