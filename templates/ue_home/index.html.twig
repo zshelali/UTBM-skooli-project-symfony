@@ -5,6 +5,7 @@
 <div class="content-wrapper">
     <div class="ueGrid">
 
+        {# Affichage de toute les UE si l'utilisateur est un modérateur (pas encore implémenté #}
         {% if is_granted('ROLE_MODO') %}
             {% for ue in ues %}
                 <div class="ueGridBox{{ loop.index }} ueBox">
@@ -19,10 +20,12 @@
                 </div>
             {% endfor %}
         {% else %}
+            {# Affichage des UE correspondant à l'utilisateur #}
             {% for ue in ues_specific %}
                 <div class="ueGridBox{{ loop.index }} ueBox">
                     <a href="{{ path('ue_content', {'id': ue.id}) }}">
                         <h4>{{ ue.code }}</h4>
+                        {# Affichage de l'image de l'UE #}
                         {% if ue.illustration %}
                             <img src="{{ asset('uploads/ue_images/' ~ ue.illustration) }}" alt="{{ ue.code }}">
                         {% else %}
@@ -37,6 +40,7 @@
         <div class="separator"></div>
 
         <div id="posts-container">
+            {# Affichage des 5 post les plus récent #}
             {% if is_granted('ROLE_MODO') %}
                 {% if recentPosts is not empty %}
                     <ul>
@@ -52,6 +56,7 @@
                     <p>Aucun post récent pour l'instant</p>
                 {% endif %}
             {% else %}
+                {# Affichage des 5 posts les plus récent correspondant au UE de l'utilisateur #}
                 {% if recentPosts_specific is not empty %}
                     <ul>
                         {% for post in recentPosts_specific %}

@@ -18,6 +18,7 @@
                 <div class="Actuality_container_text">
                     <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
                     <h3 class="Actuality_title">{{ post.title }}</h3>
+                    {# Affichage de l'icon du post si il en possède un (important/information) #}
                     {% if post.icon == "important" %}
                         <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png" alt="double-exclamation-mark-emoji" />
                     {% elseif post.icon == "information" %}
@@ -45,6 +46,7 @@
                 <div class="Actuality_container_file">
                     <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/material-outlined/24/upload-to-cloud.png" alt="upload-to-cloud"/>
                     <h3 class="Actuality_title">{{ post.title }}</h3>
+                    {# Affichage de l'icon du post si il en possède un (important/information) #}
                     {% if post.icon == "important" %}
                         <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png" alt="double-exclamation-mark-emoji" />
                     {% elseif post.icon == "information" %}

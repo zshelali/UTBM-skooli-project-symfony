@@ -36,7 +36,7 @@ final class UeHomeController extends AbstractController
         $stmt = $connection->executeQuery($sql, ['id' => $user->getId()]);
         $recentPosts_all = $stmt->fetchAllAssociative();
 
-
+        //Récupération les 5 dernier posts correspondant au UE de l'utilisateur
         $sql = " SELECT p.id, p.title, p.content, p.post_date, u.code AS ue_code, us.first_name, us.last_name
         FROM post p 
         INNER JOIN ue u ON p.id_ue_id = u.id 
@@ -48,6 +48,7 @@ final class UeHomeController extends AbstractController
         $stmt = $connection->executeQuery($sql, ['id' => $user->getId()]);
         $recentPosts_specific = $stmt->fetchAllAssociative();
 
+        // Récupère toute les UE
         $ues = $ueRepository->findAll();
 
         // Récupère les UE auxquelles cet utilisateur est inscrit
