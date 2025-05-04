@@ -1,15 +1,20 @@
+{#{% set scripts = ['admin_script'] %}#}
 {% include header %}
 
 <div id="tabs">
     <ul>
         <li><a href="#tabs-1">UE list</a></li>
         <li><a href="#tabs-2">User list</a></li>
+        <li><a href="#tabs-3">Assignation</a></li>
     </ul>
     <div id="tabs-1" class="ue-tab">
         {% include uelist %}
     </div>
     <div id="tabs-2" class="user-tab">
         {% include userlist %}
+    </div>
+    <div id="tabs-3" class="assignation-tab">
+        {% include assignationlist %}
     </div>
 </div>
 

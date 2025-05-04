@@ -1,26 +1,33 @@
-function deleteUERow(){
-  confirm("Are you sure you want to delete this UE ? \n(Will do nothing here, waiting for backend)");
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   const ueTab = document.querySelector(".ue-tab");
-  if (!ueTab) return; // Ensure this script only runs in the UE tab
+  if (!ueTab) return;
 
-  const modal = ueTab.querySelector("#ueEditModal"); // Updated to match the correct ID
+  const modal = ueTab.querySelector("#ueEditModal");
   const closeBtn = modal.querySelector(".close");
   const settingsButtons = ueTab.querySelectorAll(".edit-btn");
   const rows = ueTab.querySelectorAll(".ue-list-container table tr");
+  const ueForm = ueTab.querySelector("#ue-form");
+  const modalTitle = ueTab.querySelector("#ue-modal-title");
+  const modalSubmit = ueTab.querySelector("#ue-modal-submit");
 
   settingsButtons.forEach((btn, i) => {
     btn.addEventListener("click", () => {
-      const row = rows[i + 1]; // skip header
+      const row = rows[i + 1]; // Ignorer l'en-tête
       const cells = row.querySelectorAll("td");
-      ueTab.querySelector("#ue-code").value = cells[0].textContent;
-      ueTab.querySelector("#ue-name").value = cells[1].textContent;
-      ueTab.querySelector("#ue-description").value = cells[2].textContent;
-      ueTab.querySelector("#ue-credits").value = cells[3].textContent;
-      ueTab.querySelector("#ue-modal-title").textContent = "UE settings";
-      ueTab.querySelector("#ue-modal-submit").textContent = "Update";
+      const ueId = cells[0].textContent.trim();
+      const ueCode = cells[1].textContent.trim();
+      const ueName = cells[2].textContent.trim();
+      const ueDesc = cells[3].textContent.trim();
+      const ueCredits = cells[4].textContent.trim();
+
+      ueForm.action = `/admin/update-ue/${ueId}`;
+      ueForm.querySelector("#ue-code").value = ueCode;
+      ueForm.querySelector("#ue-name").value = ueName;
+      ueForm.querySelector("#ue-description").value = ueDesc;
+      ueForm.querySelector("#ue-credits").value = ueCredits;
+
+      modalTitle.textContent = "UE settings";
+      modalSubmit.textContent = "Update";
       modal.style.display = "block";
     });
   });
@@ -28,11 +35,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = ueTab.querySelector(".add-btn");
   if (addBtn) {
     addBtn.addEventListener("click", () => {
-      ueTab.querySelector("#ue-code").value = '';
-      ueTab.querySelector("#ue-name").value = '';
-      ueTab.querySelector("#ue-description").value = '';
-      ueTab.querySelector("#ue-modal-title").textContent = "New UE";
-      ueTab.querySelector("#ue-modal-submit").textContent = "Add";
+      ueForm.action = "/admin/add-ue";
+      ueForm.querySelector("#ue-code").value = '';
+      ueForm.querySelector("#ue-name").value = '';
+      ueForm.querySelector("#ue-description").value = '';
+      ueForm.querySelector("#ue-credits").value = '';
+      ueForm.querySelector("#ue-input-illustration").value = '';
+
+      modalTitle.textContent = "New UE";
+      modalSubmit.textContent = "Add";
       modal.style.display = "block";
     });
   }
@@ -49,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Search bar
+  // Barre de recherche
   const ueSearchInput = ueTab.querySelector("#ueSearchInput");
   if (ueSearchInput) {
     ueSearchInput.addEventListener("keyup", function () {
@@ -63,3 +74,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// Suppression d'UE (même principe que pour les utilisateurs)
+function deleteUeRow(ueId) {
+  if (confirm("Are you sure you want to delete this UE?")) {
+    fetch(`/admin/ue/${ueId}`, {
+      method: "DELETE"
+    })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error while deleting the UE.');
+          }
+          const button = document.querySelector(`button[onclick="deleteUeRow(${ueId})"]`);
+          if (button) {
+            const row = button.closest('tr');
+            if (row) {
+              row.remove();
+            }
+          }
+        })
+        .catch(error => {
+          alert('An error occurred: ' + error.message);
+        });
+  }
+}

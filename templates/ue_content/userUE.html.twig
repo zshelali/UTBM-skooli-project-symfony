@@ -1,0 +1,64 @@
+{% set styles = ['userUEcontent'] %}
+{% include 'PageParts/parts_header.html.twig' %}
+
+<div id="tabs-2" class="tab-content">
+    {% if users is not empty %}
+        <h2 class="main-subtitle">Users registered in {{ ue.code }}</h2>
+
+        <div class="user-tables-wrapper">
+            <div class="user-table-section" id="user-students">
+                <h3 class="subtitle">Students</h3>
+                <div class="user-table-scroll">
+                    <table class="user-table" id="user-table-students">
+                        <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            {% if 'ROLE_STUDENT' in user.roles %}
+                                <tr>
+                                    <td>{{ user.firstName }}</td>
+                                    <td>{{ user.lastName }}</td>
+                                    <td><a href="mailto:{{ user.email }}" style="color: #D42D26">{{ user.email }}</a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="user-table-section" id="user-professors">
+                <h3 class="subtitle">Professors</h3>
+                <div class="user-table-scroll">
+                    <table class="user-table" id="user-table-professors">
+                        <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            {% if 'ROLE_PROFESSOR' in user.roles %}
+                                <tr>
+                                    <td>{{ user.firstName }}</td>
+                                    <td>{{ user.lastName }}</td>
+                                    <td><a href="mailto:{{ user.email }}" style="color: #D42D26">{{ user.email }}</a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>No users found for this UE.</p>
+    {% endif %}
+</div>

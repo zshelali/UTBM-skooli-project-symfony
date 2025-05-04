@@ -10,8 +10,27 @@ function generateRandomPassword(length) {
   return result;
 }
 
-function deleteUserRow() {
-  confirm("Are you sure you want to delete this user ? \n(Will do nothing here, waiting for backend)");
+function deleteUserRow(userId) {
+  if (confirm("Are you sure you want to delete this user?")) {
+    fetch(`/admin/user/${userId}`, {
+      method: 'DELETE'
+    })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error while deleting the user.');
+          }
+          const button = document.querySelector(`button[onclick="deleteUserRow(${userId})"]`);
+          if (button) {
+            const row = button.closest('tr');
+            if (row) {
+              row.remove();
+            }
+          }
+        })
+        .catch(error => {
+          alert('An error occurred: ' + error.message);
+        });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -20,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const modal = userTab.querySelector("#userEditModal");
   const closeBtn = modal.querySelector(".close");
+  const userForm = userTab.querySelector("#user-form");
   var roles = [];
   var roleString = "";
   var counter = 0;
@@ -29,45 +49,58 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       const row = btn.closest("tr");
       const cells = row.querySelectorAll("td");
+      userId = cells[0].textContent.trim();
+      const roleName = cells[1].textContent.trim().toLowerCase();
 
+      userTab.querySelectorAll("input[name='role']").forEach((radio) => {
+        radio.checked = radio.id === `role-${roleName}`;
+      });
+      userForm.action = `/admin/update-user/${userId}`
       document.getElementById("user-first-name").value = cells[2].textContent.trim();
+      document.getElementById("user-first-name").required = false;
+
       document.getElementById("user-last-name").value = cells[3].textContent.trim();
+      document.getElementById("user-last-name").required = false;
+
       document.getElementById("user-email").value = cells[4].textContent.trim();
-      document.getElementById("user-password").value = cells[5].textContent.trim();
+      document.getElementById("user-email").required = false;
 
-      // --- reset and extract role ---
-      roles = [];
-      roleString = "";
-      counter = 0;
-      const roleText = cells[1].textContent.trim();
+      document.getElementById("user-password").required = false;
 
-      for (const char of roleText) {
-        roleString += char;
-        counter++;
-        if (char === ',' || counter === roleText.length) {
-          roles.push(roleString.replace(',', '').trim());
-          roleString = "";
-        }
-      }
 
-      for (const role of roles) {
-        switch (role) {
-          case "Professor":
-            userTab.querySelector("#select-role-prof").checked = true;
-            break;
-          case "Student":
-            userTab.querySelector("#select-role-student").checked = true;
-            break;
-          case "Admin":
-            userTab.querySelector("#is-admin").checked = true;
-            break;
-          default:
-            console.log("No role could be read.");
-        }
-      }
+      // // --- reset and extract role ---
+      // roles = [];
+      // roleString = "";
+      // counter = 0;
+      // const roleText = cells[1].textContent.trim();
+      //
+      // for (const char of roleText) {
+      //   roleString += char;
+      //   counter++;
+      //   if (char === ',' || counter === roleText.length) {
+      //     roles.push(roleString.replace(',', '').trim());
+      //     roleString = "";
+      //   }
+      // }
+      //
+      // for (const role of roles) {
+      //   switch (role) {
+      //     case "Professor":
+      //       userTab.querySelector("#select-role-prof").checked = true;
+      //       break;
+      //     case "Student":
+      //       userTab.querySelector("#select-role-student").checked = true;
+      //       break;
+      //     case "Admin":
+      //       userTab.querySelector("#is-admin").checked = true;
+      //       break;
+      //     default:
+      //       console.log("No role could be read.");
+      //   }
+      // }
 
       userTab.querySelector("#user-modal-title").textContent = "Edit user";
-      userTab.querySelector("#user-modal-submit").textContent = "Confirm update";
+      userTab.querySelector("#user-modal-submit").textContent = "Update";
       modal.style.display = "block";
     });
   });
@@ -76,12 +109,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = userTab.querySelector(".add-btn");
   if (addBtn) {
     addBtn.addEventListener("click", () => {
+      userForm.action = "/admin/add-user"
+
+      document.getElementById("user-first-name").required = true;
+      document.getElementById("user-last-name").required = true;
+      document.getElementById("user-email").required = true;
+      document.getElementById("user-password").required = true;
+
       userTab.querySelector("#user-first-name").value = "";
       userTab.querySelector("#user-last-name").value = "";
       userTab.querySelector("#user-email").value = "";
       userTab.querySelector("#user-password").value = generateRandomPassword(RANDOM_PASSWORD_LENGTH);
       userTab.querySelector("#user-modal-title").textContent = "Add a new user";
-      userTab.querySelector("#user-modal-submit").textContent = "Add user";
+      userTab.querySelector("#user-modal-submit").textContent = "Add";
       modal.style.display = "block";
     });
   }

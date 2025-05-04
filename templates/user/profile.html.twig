@@ -1,0 +1,30 @@
+{% include header %}
+
+<div class="form-container">
+    <h3 class="subtitle">Edit Profile</h3>
+
+    <form class="reg-log-form" action="{{ path('app_profile') }}" method="post" enctype="multipart/form-data">
+        <label for="email">Email :</label>
+        <input id="email" name="email" type="email" value="{{ last_username }}" required autofocus />
+
+        <label for="firstName">First Name :</label>
+        <input id="firstName" name="firstName" type="text" value="{{ user.firstName }}" required />
+
+        <label for="lastName">Last Name :</label>
+        <input id="lastName" name="lastName" type="text" value="{{ user.lastName }}" required />
+
+        <label for="image">Profile picture :</label>
+        <input id="image" name="image" type="file" />
+
+        <label for="password">Password :</label>
+        <input id="password" name="password" type="password" placeholder="Leave empty if you don't want to change the password" />
+
+
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('profile_update') }}" />
+
+        <button type="submit" class="buttonlink submit-reg">Update</button>
+    </form>
+</div>
+
+{% include footer %}

@@ -1,0 +1,125 @@
+{% set scripts = ['index_home_script'] %}
+{% include header %}
+
+<div class="UE_name">
+    <h1>{{ ue.code }} : {{ ue.name }}</h1>
+</div>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Posts</a></li>
+        <li><a href="#tabs-2">Users</a></li>
+    </ul>
+
+    <div id="tabs-1">
+        {% include 'ue_content/postUE.html.twig' %}
+    </div>
+
+    <div id="tabs-2">
+        {% include 'ue_content/userUE.html.twig' %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Sélectionner tous les onglets et le contenu des onglets
+        const tabs = document.querySelectorAll("#tabs ul li a");
+        const contents = document.querySelectorAll("#tabs > div");
+
+        contents.forEach((content, index) => {
+            content.style.display = index === 0 ? "block" : "none";
+        });
+
+        // Ajouter un événement de clic à chaque onglet
+        tabs.forEach(tab => {
+            tab.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute("href");
+
+                // Masquer tous les contenus
+                contents.forEach(content => {
+                    content.style.display = "none";
+                });
+
+                // Afficher seulement le contenu correspondant à l'onglet cliqué
+                const targetContent = document.querySelector(targetId);
+                if (targetContent) {
+                    targetContent.style.display = "block";
+                }
+
+                // Réinitialiser les événements après le changement de tab
+                initializePostEvents();
+            });
+        });
+
+        function initializePostEvents() {
+            const addPostBtn = document.querySelector('.add-post-btn-link');
+            if (addPostBtn) {
+                addPostBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.getElementById('addPostModal').style.display = 'block';
+                    document.getElementById('modal-title').innerText = 'Add post';
+                    document.getElementById('modal-submit').innerText = 'Publier';
+                    document.getElementById('addPostForm').action = "{{ path('post_add', { id: ue.id }) }}";
+                    document.getElementById('postTitle').value = '';
+                    document.getElementById('postContent').value = '';
+                });
+            }
+
+            document.querySelectorAll('.dropdown-menu a:first-child').forEach(editBtn => {
+                editBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.getElementById('addPostModal').style.display = 'block';
+                    document.getElementById('modal-title').innerText = 'Update post';
+                    document.getElementById('modal-submit').innerText = 'Mettre à jour';
+                });
+            });
+
+            document.querySelectorAll('.Actuality_options').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const menu = this.nextElementSibling;
+                    const isVisible = menu.style.display === 'block';
+                    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+                    menu.style.display = isVisible ? 'none' : 'block';
+                });
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('.Actuality_menu')) {
+                    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+                }
+            });
+
+            document.querySelectorAll('.edit-post').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const title = this.getAttribute('data-title');
+                    const content = this.getAttribute('data-content');
+                    const icon = this.getAttribute('data-icon');
+                    const id = this.getAttribute('data-id');
+                    document.getElementById('postTitle').value = title;
+                    document.getElementById('postContent').value = content;
+                    document.getElementById('icon').value = icon;
+                    document.getElementById('addPostForm').action = `/post/${id}/update`;
+                    document.getElementById('modal-submit').textContent = 'Update';
+                    document.getElementById('modal-title').textContent = 'Update post';
+                    openPostModal();
+                });
+            });
+
+            const closePostButton = document.querySelector('.close-post');
+            if (closePostButton) {
+                closePostButton.addEventListener('click', function () {
+                    document.getElementById('addPostModal').style.display = 'none';
+                });
+            }
+        }
+
+        // Initialisation des événements après le chargement de la page
+        initializePostEvents();
+    });
+</script>
+
+{% include footer %}

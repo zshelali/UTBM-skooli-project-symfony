@@ -118,10 +118,10 @@ TRYING TO MAKE THESE JQUERY TABS LOOK BETTER 🥲🥲🥲 */
 
 #tabs ul li.ui-tabs-active a {
   background-color: #fff !important;
-  color: #d5302a;
-  font-weight: bold;
-  border-bottom: 1px solid #fff;
-  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.03);
+  color: #d5302a !important;
+  font-weight: bold !important;
+  border-bottom: 1px solid #fff !important;
+  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.03) !important;
 }
 
 /* Tab content area */
@@ -133,7 +133,7 @@ TRYING TO MAKE THESE JQUERY TABS LOOK BETTER 🥲🥲🥲 */
 }
 
 /* Tab panels - specific styling for each tab type */
-.ue-tab, .user-tab {
+.ue-tab, .user-tab, .assignation-tab {
   min-height: 400px;
 }
 

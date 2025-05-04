@@ -1,0 +1,129 @@
+
+
+
+<div id="tabs-1" class="tab-content">
+    {# On affiche le bouton permetant de rajouter des posts uniquement si l'utilisateur à le rôle professeur #}
+    {% if is_granted('ROLE_PROFESSOR') or is_granted('ROLE_PROFADMIN') %}
+        <a href="#" class="add-post-btn-link">
+            <img class="add-post-btn" src="https://img.icons8.com/?size=50&id=11255&format=png" alt="Add post">
+        </a>
+    {% endif %}
+
+    {# On vérifie si l'UE contient des posts #}
+    {% if posts is not empty %}
+        {# On affiche l'intégralité des posts de l'UE selon leur type #}
+        {% for post in posts %}
+            {# Affichage des posts de texte #}
+            {% if post.file == null %}
+                <div class="Actuality_container_text">
+                    <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+                    <h3 class="Actuality_title">{{ post.title }}</h3>
+                    {% if post.icon == "important" %}
+                        <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png" alt="double-exclamation-mark-emoji" />
+                    {% elseif post.icon == "information" %}
+                        <img class="Actuality_icon" title="Information" width="30" height="30" src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+                    {% endif %}
+                    {# Le bouton du menu de vérification ne s'affiche que pour les professeurs #}
+                    {% if is_granted('ROLE_PROFESSOR') or is_granted('ROLE_PROFADMIN') %}
+                        <div class="Actuality_menu">
+                            <a class="Actuality_options">&#8285;</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="edit-post" data-id="{{ post.id }}" data-title="{{ post.title }}" data-content="{{ post.content }}" data-icon="{{ post.icon }}">Modifier</a>
+                                <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <time class="Actuality_time" datetime="{{ post.post_date|date('Y-m-d\\TH:i:s') }}">
+                        {{ post.post_date|date('H\\hi \\t\\h\\e d F') }}
+                    </time>
+                    <p class="text_paragraph">
+                        {{ post.content }}
+                    </p>
+                </div>
+            {# Affichage des posts avec un fichier  #}
+            {% elseif post.file != null %}
+                <div class="Actuality_container_file">
+                    <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/material-outlined/24/upload-to-cloud.png" alt="upload-to-cloud"/>
+                    <h3 class="Actuality_title">{{ post.title }}</h3>
+                    {% if post.icon == "important" %}
+                        <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png" alt="double-exclamation-mark-emoji" />
+                    {% elseif post.icon == "information" %}
+                        <img class="Actuality_icon" title="Information" width="30" height="30" src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+                    {% endif %}
+                    {# Le bouton du menu de vérification ne s'affiche que pour les professeurs #}
+                    {% if is_granted("ROLE_PROFESSOR") or is_granted('ROLE_PROFADMIN') %}
+                        <div class="Actuality_menu">
+                            <a class="Actuality_options">&#8285;</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="edit-post" data-id="{{ post.id }}" data-title="{{ post.title }}" data-content="{{ post.content }}" data-icon="{{ post.icon }}">Modifier</a>
+                                <a href="{{ path('post_delete', {'id': post.id}) }}" class="delete-post">Supprimer</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <time class="Actuality_time" datetime="{{ post.post_date|date('Y-m-d\\TH:i:s') }}">
+                        {{ post.post_date|date('H\\hi \\t\\h\\e d F') }}
+                    </time>
+                    <p class="text_paragraph">{{post.content}}</p>
+                    <div class="File_box">
+                        <img class="File_icon" width="100" height="100" src="https://img.icons8.com/plasticine/100/file.png" alt="file" />
+                        <a class="File_text" href="{{ asset('uploads/' ~ post.file) }}" download="{{ post.file }}">
+                            Click here to download the file
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            <hr />
+        {% endfor %}
+    {# Si l'UE ne contient aucun post, on affiche un post par défault#}
+    {% else %}
+        <div class="Actuality_container_text">
+            <img class="Actuality_icon" width="30" height="30" src="https://img.icons8.com/android/24/speech-bubble.png" alt="speech-bubble" />
+            <h3 class="Actuality_title">Pas de post disponible</h3>
+
+            <img class="Actuality_icon" title="! Important !" width="30" height="30" src="https://img.icons8.com/emoji/30/double-exclamation-mark-emoji.png" alt="double-exclamation-mark-emoji" />
+            <img class="Actuality_icon" title="Information" width="30" height="30" src="https://img.icons8.com/fluency/30/information.png" alt="information" />
+
+
+
+            <time class="Actuality_time" datetime="{{ "now"|date('Y-m-d\\TH:i:s') }}">
+                {{ "now"|date('H\\hi \\t\\h\\e d F') }}
+            </time>
+
+            <p class="text_paragraph">
+                Aucun post n'a encore été publié pour cette UE. Revenez plus tard ou ajoutez un post si vous êtes professeur !
+            </p>
+        </div>
+        <hr />
+    {% endif %}
+
+    {# Le menu permettant la modification et la création de nouveau post #}
+    <div id="addPostModal" class="modal">
+        <div class="modal-content">
+            <span class="close-post" onclick="closePostModal()">×</span>
+            <div class="post-form-box">
+                <h2 id="modal-title">Add post</h2>
+                <form id="addPostForm" method="POST" action="{{ path('post_add', { id: ue.id }) }}" enctype="multipart/form-data">
+                    <label for="postTitle">Title</label>
+                    <input type="text" id="postTitle" name="title" required />
+
+                    <label for="postContent">Content</label>
+                    <textarea id="postContent" name="content" rows="4" required></textarea>
+
+                    <label for="icon">Icon</label>
+                    <select name="icon" id="icon">
+                        <option value="">None</option>
+                        <option value="information">Information</option>
+                        <option value="important">Important</option>
+                    </select>
+
+                    <div class="formGroup">
+                        <label for="file">Add file (optional) :</label>
+                        <input type="file" name="file" class="fileInput" />
+                    </div>
+
+                    <button type="submit" id="modal-submit">Publier</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
