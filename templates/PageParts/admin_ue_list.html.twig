@@ -1,3 +1,5 @@
+{#1st tab on the admin zone#}
+
 {% set styles = ['admin_ue_style'] %}
 {% set scripts = ['ue_script'] %}
 {% include 'PageParts/parts_header.html.twig' %}
@@ -58,6 +60,8 @@
         {% endfor %}
     </table>
 </div>
+
+{#modal for editing and adding UEs without leaving the page. Handled with JS#}
 
 <div id="ueEditModal" class="modal">
     <div class="modal-content">
