@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const clone = ueRow.cloneNode(true);
                 clone.classList.remove("selected");
                 clone.classList.add("pending-ue");
-                clone.style.display = ""; e
+                clone.style.display = "";
                 registeredUeTable.appendChild(clone);
                 ueRow.remove();
             }
@@ -237,7 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const removedUeCodes = Array.from(initiallyAssignedUeCodes).filter(code => !currentRegisteredCodes.includes(code));
 
-        // ✅ NOW we can check this
         if (addedUeCodes.length === 0 && removedUeCodes.length === 0) {
             alert("No changes to confirm.");
             return;
